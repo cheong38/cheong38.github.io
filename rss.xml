@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[우진의 음주코딩]]></title><description><![CDATA[TIL(Today I Learned), 소프트웨어, 프로그래밍 등을 기록합니다.]]></description><link>https://cheong38.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Sat, 10 Oct 2020 07:43:16 GMT</lastBuildDate><item><title><![CDATA[(TIL) Git Merge --no-ff]]></title><description><![CDATA[FF(Fast Forward) git 에서 Fast Forward 현재 브랜치와 Merge 하려는 브랜치가 선형 관계에 있어 Merge 결과 별도의 커밋 없이 커밋을 위에 쌓기만 하는 것을 말한다. 그림으로 살펴보면 아래와 같다.  branch-…]]></description><link>https://cheong38.github.io/2020-09-11-til-git-merge-no-ff/index/</link><guid isPermaLink="false">https://cheong38.github.io/2020-09-11-til-git-merge-no-ff/index/</guid><pubDate>Fri, 11 Sep 2020 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;FF(Fast Forward)&lt;/h1&gt;
+&lt;p&gt;git 에서 Fast Forward 현재 브랜치와 Merge 하려는 브랜치가 선형 관계에 있어 Merge 결과 별도의 커밋 없이 커밋을 위에 쌓기만 하는 것을 말한다.&lt;/p&gt;
+&lt;p&gt;그림으로 살펴보면 아래와 같다.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 711px; &quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/805ad481a95e3b716519065db3dd7057/5e9f9/merge-ff.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 80.4%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAYAAAAWGF8bAAAACXBIWXMAAAsSAAALEgHS3X78AAABqklEQVQ4y5WUW1ODMBCF+f9/yxd9cOyD1j5oZ7ByEUtLgQRy45hNJeXqjJnJTIDk27MnuwQYjK7r3KRRliV2ux3CMIRSyk0hxHA7jN3bCEMn/fkAC6OH9oNz7mBSSjRNA2OMDSBxOApsI4WCaQd1wKGq4bptW1RV5SCklp5pzRiDcGCOMGvwGiukee2DB9N0e6CUClprv5FgNEcpmw5CdciyzFsTXOWrWdpCNB4wtGAc+PqeApMlLuXeH/JGkQqlIdkZJnmCOb2NAENrphb5lAlIEcgbMloqA346AB930PEjJbZ4UUtgp7BXNzvAv3HJY1zKynu5BJ2OYKkO+4NVzZAkyaKXq8Ap5K/01vYO362WTc043vd7RNHnrFzGFzKGB0st5eqOF6jLsy1oWw7G/NadmflNSy70TSHdMkFdS1nzNRVr+QVE98BxayHagUhlXddu7c7YvUYrxHmLF9t+2UXfgL6lrNJWWHiRooseoLNnq7DxdUqt2JcYKRf2W5RT+2lkxdWW1ZQ7yWyqcuYb9fT00ioukKap+xb89xaXfnWV/XlsNhuczmf8ACVr6lTYfug/AAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;Fast forward example&quot;
+        title=&quot;Fast forward example&quot;
+        src=&quot;/static/805ad481a95e3b716519065db3dd7057/5e9f9/merge-ff.png&quot;
+        srcset=&quot;/static/805ad481a95e3b716519065db3dd7057/0eb09/merge-ff.png 500w,
+/static/805ad481a95e3b716519065db3dd7057/5e9f9/merge-ff.png 711w&quot;
+        sizes=&quot;(max-width: 711px) 100vw, 711px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;branch-1 로 branch-2 를 merge 하는 상황이며, merge 커밋 없이 branch-1 의 헤더를 branch-2 로 옮겨줄 수 있다.
+이런 merge 를 fast forward 라 한다.&lt;/p&gt;
+&lt;h1&gt;FF 를 할 수 없는 상황&lt;/h1&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 731px; &quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/9c6cf2a4421b1c7270e317d818f8702c/4bd0f/merge-not-ff.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 99%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsSAAALEgHS3X78AAACHUlEQVQ4y41Va4+bMBDk//+qqqeqnyv1caFF6V1OoUmO8AY/sKe7JiaGgHSWVoCzO+tZz24iLJa11j2v1yviOEaapm5PSgmt9cxXaQOhDEdhDLOItgD5yWaMQVmWDqzve2cMXjct4lQi/qcDUAL0gSOQnQB9IAO2bQullNtjYGsN/aaQnDR2R4Gmk9MhovBkd2BA3MAmegQYfvMyhkqhNN4OB5zPZ7cXsdMwDEvmEH3zAMB+YUluR3FM2Bwg0xFCODNmwEAYuj7Bvn2FyRP6to6m9/OBd0bz+kdcF87cNA05C/RCoXvfA4cvUKcfDqzrOlRV5U7M/ssShaWKuDac+WHJEtnlhKIoOXoCe6Q8X6uX4p0bkkaWZcTAbErrAXBLNnyiMGCZzPuGezPZLLPneY4kSVynhCpYY/IhQC8nL50teS1Bo7XChqBsvkv48vh94P1B41Iq7C+kArnZencw1huDMEBd1046LCF+9wn+pB2+vWqcCzm/lLWjC0ESCTqFEyzlJbRFVmkcj6mrOSeMPLWw4GMvEzW7Xqf5bQPvNOryohgBPbXZrLMDdPYbpniZDQc/gWanJJ22z7+4+UfKXBteXBvBhZcaTU5D9eXJ9bPoSmpH4Sjx4p7mGEl7HVn98zvE508Qf/ewvvXuc87ebpbkUh1g6hTmRs8PWD8jnfEEohnQ7RMoek6yWWshe7M1OQUbYzkI/Hm3c38b/wEmWCSzAl34cgAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;Not Fast forward example&quot;
+        title=&quot;Not Fast forward example&quot;
+        src=&quot;/static/9c6cf2a4421b1c7270e317d818f8702c/4bd0f/merge-not-ff.png&quot;
+        srcset=&quot;/static/9c6cf2a4421b1c7270e317d818f8702c/0eb09/merge-not-ff.png 500w,
+/static/9c6cf2a4421b1c7270e317d818f8702c/4bd0f/merge-not-ff.png 731w&quot;
+        sizes=&quot;(max-width: 731px) 100vw, 731px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;위의 상황에서는 fast forward 가 불가능하여 merge 커밋을 생성할 수 밖에 없다.&lt;/p&gt;
+&lt;h1&gt;—no-ff 옵션&lt;/h1&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 721px; &quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/1bf4bb2b7edf2cb98e322b744c41f113/4f939/merge-no-ff.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 94.8%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAATCAYAAACQjC21AAAACXBIWXMAAAsSAAALEgHS3X78AAAB80lEQVQ4y42U2ZLaMBBF9f9/leUxD1RNJamECR5gEsAQsC0vsrabboE83iDTVSrZlnV6UV8JjMx7HwZbkiRYLpe4XC7hXSnVrUVT2sE63+0VuGP9jdZalGUJ5xzquoYxFt5ZnKXCt98G27+Gd1yBMaII6M9SyhAVQ/iZwVVV0bcWWiucsgo/dha/dlVYYxP9SDowDUdpqLYdrM2lrIkjZYn1ywuyPL+mrLUO6YxTbmo5Sb/vuJ+NMSZEKVqKggenxTPDOTJz+gn35wu8yuBnIICfdSaapglkBjLMkqcA3C3g159g5e620d09uL6zUEOGcsgDswq2OiJND2F93FL3TDysDY00TVEUxfuBk9rw821+5Cz23fhwxCOlbDYbrFarTilz/4zrKR6phOsaB9dx3IdZZXHIDdytdwdKGXvmE48nfz6fA5TbihXDc1FIfH9t8LQ1yErzlvI96bUUjSFY1DJHyIMFENV0Kgw2aUMOM3KipjXsg1vjYKybvSwikA+mIVB6PGK/31+BHP5Uox46f6VWLPA/k9sttHyTqOA6xetJM1wb1KcEWH+A3S/IWYOrPBWiTLkciq4whjWfP0J9fepKEYAcIf/oCMyXpakv8IcFXLamdxccTgb91xZ5gFXJatjY8S4b1tPhvXYgNS2fn0Mn/AOOfdYWTPn4WwAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;--no-ff option&quot;
+        title=&quot;--no-ff option&quot;
+        src=&quot;/static/1bf4bb2b7edf2cb98e322b744c41f113/4f939/merge-no-ff.png&quot;
+        srcset=&quot;/static/1bf4bb2b7edf2cb98e322b744c41f113/0eb09/merge-no-ff.png 500w,
+/static/1bf4bb2b7edf2cb98e322b744c41f113/4f939/merge-no-ff.png 721w&quot;
+        sizes=&quot;(max-width: 721px) 100vw, 721px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;--no-ff&lt;/code&gt; 옵션을 사용하면 fast forward 가 가능한 상황에서 merge 커밋을 항상 생성하여 merge 를 진행하게 된다.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[정적 웹페이지(Static web)에 환경 변수 사용하기]]></title><description><![CDATA[개요 앱을 작성하고 빌드하다보면 환경 별로 서로 다른 값을 사용해야 하는 값들이 있다.
+이러한 설정 값을 환경 변수라고 부른다.
+일반적으로 development, staging(qa), production 과 같이 환경을 나누어 사용한다.
+그리고 1…]]></description><link>https://cheong38.github.io/2020-09-08-env-static-web/index/</link><guid isPermaLink="false">https://cheong38.github.io/2020-09-08-env-static-web/index/</guid><pubDate>Tue, 08 Sep 2020 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;개요&lt;/h1&gt;
+&lt;p&gt;앱을 작성하고 빌드하다보면 환경 별로 서로 다른 값을 사용해야 하는 값들이 있다.
+이러한 설정 값을 환경 변수라고 부른다.
+일반적으로 development, staging(qa), production 과 같이 환경을 나누어 사용한다.
+그리고 &lt;a href=&quot;https://12factor.net/ko/config&quot;&gt;12 factors app 에서 가이드&lt;/a&gt;하고 있는 바는 설정 값은 코드에 상수로 저장하기보다는 설정을 코드에서 엄격히 분리하라고 가이드 한다.&lt;/p&gt;
+&lt;p&gt;서버 환경에서는 동적으로 환경 변수를 주입해 줄 수 있다.
+Nodejs 에서는 일반적으로 NODE_ENV 라는 변수에 development, staging, production 과 같은 값을 넣고,
+&lt;a href=&quot;https://www.npmjs.com/package/config&quot;&gt;node-config&lt;/a&gt; 와 같은 라이브러를 사용하여 런타임에 적절한 환경 설정 값을 사용할 수 있게 한다.&lt;/p&gt;
+&lt;p&gt;그러나 React, Vue 와 같은 SPA (Single Page Application) 를 작성하면 설정 값의 주입이 정적 시간, 즉 빌드 시간에 이루어지기 때문에 서버 환경에서와 같은 방법을 사용할 수 없다.
+이를 해결하기 위한 방법으로 다음과 같은 방법이 있다.&lt;/p&gt;
+&lt;p&gt;(본 포스팅에서는 AWS S3 와 같은 정적 호스팅을 이용하지 않고 nginx 환경에서 배포하는 환경에서의 방법을 논한다.)&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;환경 별로 서로 다른 빌드를 만든다.&lt;/li&gt;
+&lt;li&gt;Nginx 와 같은 웹 서버 실행 시 스크립트를 통해 환경 변수를 넣어준다.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1&gt;환경 별로 서로 다른 빌드를 만든다.&lt;/h1&gt;
+&lt;p&gt;빌드 시에 개발용 환경 변수, QA 용 환경 변수, 상용 환경 변수를 선택하여 빌드하고 배포하는 방식이다.&lt;/p&gt;
+&lt;p&gt;개발용으로 빌드할 때에는 아래와 같이 실행하고,&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;shell&quot;&gt;&lt;pre class=&quot;language-shell&quot;&gt;&lt;code class=&quot;language-shell&quot;&gt;$ &lt;span class=&quot;token assign-left variable&quot;&gt;NODE_ENV&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;development &lt;span class=&quot;token function&quot;&gt;yarn&lt;/span&gt; build&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;상용으로 빌드할 때에는 아래와 같이 실행한다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;shell&quot;&gt;&lt;pre class=&quot;language-shell&quot;&gt;&lt;code class=&quot;language-shell&quot;&gt;$ &lt;span class=&quot;token assign-left variable&quot;&gt;NODE_ENV&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;production &lt;span class=&quot;token function&quot;&gt;yarn&lt;/span&gt; build&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;그 결과로 나온 빌드 파일을 nginx 와 함께 배포한다.&lt;/p&gt;
+&lt;p&gt;단순하고 직관적이지만 환경에 따라 앱 자체가 달라지는 것이 아님에도 불구하고 매번 빌드를 해줘야 한다는 단점이 있다.&lt;/p&gt;
+&lt;h1&gt;Nginx 와 같은 웹 서버 실행 시 스크립트를 통해 환경 변수를 넣어준다.&lt;/h1&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;Docker&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;React&lt;/code&gt; 그리고 Nginx 로 구성된 예시를 살펴보자.&lt;/p&gt;
+&lt;p&gt;React 에서의 예를 살펴보자.
+React 에서는 기본적으로 dotenv 를 사용한다.
+&lt;code class=&quot;language-text&quot;&gt;.env&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;.env.development&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;.env.production&lt;/code&gt; 이 각각 기본값, 개발용, 상용 환경 변수 값을 담고 있다.&lt;/p&gt;
+&lt;p&gt;nginx 실행 시, 주입되어 있는 &lt;code class=&quot;language-text&quot;&gt;NODE_ENV&lt;/code&gt; 의 값과 환경 변수에 따라 환경 설정 값을 담은 js 파일을 생성하여
+index.html` 에 주입시켜주는 방식이다.&lt;/p&gt;
+&lt;h2&gt;dotenv 를 파싱하여 js 파일 만들어주기&lt;/h2&gt;
+&lt;p&gt;다음과 같이 &lt;code class=&quot;language-text&quot;&gt;env.sh&lt;/code&gt; 파일을 작성해준다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;shellscript&quot;&gt;&lt;pre class=&quot;language-shellscript&quot;&gt;&lt;code class=&quot;language-shellscript&quot;&gt;#!/bin/bash
+
+# NOTE: You need to install bash version 4 or above.
+# This script makes use of associative arrays.
+# https://stackoverflow.com/questions/1494178/how-to-define-hash-tables-in-bash
+
+set -e
+
+declare -A key_values
+readonly CURRENT_DIR=$(dirname &amp;quot;$0&amp;quot;)
+readonly DIST=&amp;quot;$CURRENT_DIR&amp;quot;/env-config.js
+
+function trim() {
+    local var=&amp;quot;$*&amp;quot;
+    # remove leading whitespace characters
+    var=&amp;quot;${var#&amp;quot;${var%%[![:space:]]*}&amp;quot;}&amp;quot;
+    # remove trailing whitespace characters
+    var=&amp;quot;${var%&amp;quot;${var##*[![:space:]]}&amp;quot;}&amp;quot;
+    printf &amp;#39;%s&amp;#39; &amp;quot;$var&amp;quot;
+}
+
+function read_env() {
+  local env_filename=$1
+
+  # Read each line in .env file
+  # Each line represents key=value pairs
+  while read -r line || [[ -n &amp;quot;$line&amp;quot; ]];
+  do
+    line=$(trim $line)
+
+    # Ignore empty string
+    if [ -z &amp;quot;$line&amp;quot; ]; then
+      continue
+    fi
+
+    # Ignore comments
+    first_letter=$(echo $line | head -c 1)
+    if [ &amp;quot;$first_letter&amp;quot; = &amp;#39;#&amp;#39; ]; then
+      continue
+    fi
+
+    # Split env variables by character `=`
+    if printf &amp;#39;%s\n&amp;#39; &amp;quot;$line&amp;quot; | grep -q -e &amp;#39;=&amp;#39;; then
+      varname=$(printf &amp;#39;%s\n&amp;#39; &amp;quot;$line&amp;quot; | sed -e &amp;#39;s/=.*//&amp;#39;)
+      varvalue=$(printf &amp;#39;%s\n&amp;#39; &amp;quot;$line&amp;quot; | sed -e &amp;#39;s/^[^=]*=//&amp;#39;)
+    fi
+
+    key_values[$varname]=${varvalue}
+  done &amp;lt; &amp;quot;$CURRENT_DIR/$env_filename&amp;quot;
+}
+
+function read_env_from_environment_variables() {
+  # Read value of current variable if exists as Environment variable
+  # If value does not exist as Environment variable, use current value from above.
+  for key in &amp;quot;${!key_values[@]}&amp;quot;; do
+    value=$(printf &amp;#39;%s\n&amp;#39; &amp;quot;${!key}&amp;quot;)
+    # If value
+    [[ -z $value ]] &amp;amp;&amp;amp; value=${key_values[$key]}
+    key_values[$key]=$value
+  done
+}
+
+# Recreate config file
+rm -f &amp;quot;$DIST&amp;quot;
+touch &amp;quot;$DIST&amp;quot;
+
+read_env &amp;quot;.env&amp;quot;
+read_env &amp;quot;.env.${NODE_ENV}&amp;quot;
+read_env_from_environment_variables
+
+# Add assignment
+echo &amp;quot;window._env_ = {&amp;quot; &amp;gt;&amp;gt; &amp;quot;$DIST&amp;quot;
+
+# Append configuration property to JS file
+for key in &amp;quot;${!key_values[@]}&amp;quot;; do
+  echo &amp;quot;  $key: &amp;#39;${key_values[$key]}&amp;#39;,&amp;quot; &amp;gt;&amp;gt; &amp;quot;$DIST&amp;quot;
+done
+
+# Add the closing brace
+echo &amp;quot;}&amp;quot; &amp;gt;&amp;gt; &amp;quot;$DIST&amp;quot;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;이 스크립트는 &lt;code class=&quot;language-text&quot;&gt;.env&lt;/code&gt; 와 &lt;code class=&quot;language-text&quot;&gt;.env.{NODE_ENV}&lt;/code&gt; 그리고 shell 에 설정된 환경 변수 값을 읽어서 &lt;code class=&quot;language-text&quot;&gt;env-config.js&lt;/code&gt; 에서 자바스크립트 객체로 만들어준다.&lt;/p&gt;
+&lt;h2&gt;&lt;code class=&quot;language-text&quot;&gt;env-config.js&lt;/code&gt; 를 &lt;code class=&quot;language-text&quot;&gt;index.html&lt;/code&gt; 에 주입하기&lt;/h2&gt;
+&lt;p&gt;React 기본 구조 상에서 &lt;code class=&quot;language-text&quot;&gt;public/index.html&lt;/code&gt; 의 헤더 부분에 다음과 같이 &lt;code class=&quot;language-text&quot;&gt;env-config.js&lt;/code&gt; 를 넣어주는 태그를 추가한다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;html&quot;&gt;&lt;pre class=&quot;language-html&quot;&gt;&lt;code class=&quot;language-html&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;script&lt;/span&gt; &lt;span class=&quot;token attr-name&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation attr-equals&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;%PUBLIC_URL%/env-config.js&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token script&quot;&gt;&lt;/span&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;/&lt;/span&gt;script&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;Dockerfile 작성하기&lt;/h2&gt;
+&lt;p&gt;Nginx 를 사용하여 배포하는 것은 &lt;a href=&quot;https://dev.to/subhransu/nevertheless-subhransu-maharana-coded-5eam&quot;&gt;다른 포스팅&lt;/a&gt;을 참고하여 작성하고, 추가적으로 &lt;code class=&quot;language-text&quot;&gt;env.sh&lt;/code&gt; 를 Docker 컨테이너에 추가하고, nginx 실행 전에 실행시켜 &lt;code class=&quot;language-text&quot;&gt;env-config.js&lt;/code&gt; 파일이 생성되도록 한다.
+그리고 아래의 설정을 Dockerfile 에 추가해준다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;yaml&quot;&gt;&lt;pre class=&quot;language-yaml&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;COPY ./env.sh .
+COPY .env .
+COPY .env.development .
+COPY .env.production .
+
+RUN apk add &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;no&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;cache bash
+
+RUN chmod +x env.sh
+
+CMD &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;/bin/bash&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;-c&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;/usr/share/nginx/html/env.sh &amp;amp;&amp;amp; nginx -g \&quot;daemon off;\&quot;&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;실행하기&lt;/h2&gt;
+&lt;p&gt;이제 런타임에 환경 설정 값을 변경할 준비가 되었다.&lt;/p&gt;
+&lt;p&gt;개발용으로 실행시킬 때는 아래와 같이 실행할 수 있다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;shell&quot;&gt;&lt;pre class=&quot;language-shell&quot;&gt;&lt;code class=&quot;language-shell&quot;&gt;$ docker run -it -p &lt;span class=&quot;token number&quot;&gt;80&lt;/span&gt;:80 -e &lt;span class=&quot;token assign-left variable&quot;&gt;NODE_ENV&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;development &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;DOCKER_IMAGE&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;상용으로 실행시킬 때는 아래와 같이 실행시킬 수 있다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;shell&quot;&gt;&lt;pre class=&quot;language-shell&quot;&gt;&lt;code class=&quot;language-shell&quot;&gt;$ docker run -it -p &lt;span class=&quot;token number&quot;&gt;80&lt;/span&gt;:80 -e &lt;span class=&quot;token assign-left variable&quot;&gt;NODE_ENV&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;production &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;DOCKER_IMAGE&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h1&gt;참고&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.freecodecamp.org/news/how-to-implement-runtime-environment-variables-with-create-react-app-docker-and-nginx-7f9d42a91d70/&quot;&gt;https://www.freecodecamp.org/news/how-to-implement-runtime-environment-variables-with-create-react-app-docker-and-nginx-7f9d42a91d70/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Redis 를 메세지 큐 (Message Queue) 로 사용하기 (feat. Bull)]]></title><description><![CDATA[개요 Redis 는 일반적으로 데이터베이스 캐시와 메세지 브로커로 쓰이는 오픈소스로 된 인메모리 데이터 저장소이다.
+Redis 에서는 pub/sub 기능도 제공하는데, 여기서 자세한 내용을 찾아볼 수 있다.
+Redis pub/sub…]]></description><link>https://cheong38.github.io/2020-08-28-redis-queue/index/</link><guid isPermaLink="false">https://cheong38.github.io/2020-08-28-redis-queue/index/</guid><pubDate>Fri, 28 Aug 2020 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;개요&lt;/h1&gt;
+&lt;p&gt;Redis 는 일반적으로 데이터베이스 캐시와 메세지 브로커로 쓰이는 오픈소스로 된 인메모리 데이터 저장소이다.
+Redis 에서는 pub/sub 기능도 제공하는데, &lt;a href=&quot;https://redis.io/topics/pubsub&quot;&gt;여기서&lt;/a&gt; 자세한 내용을 찾아볼 수 있다.
+Redis pub/sub 의 주요한 특성 중 하나는 메세지가 구독하는 모든 클라이언트에게 보내진다는 것이다.
+즉, 하나의 publish 에 대해서 여러 클라이언트가 실행될 수 있다는 의미이다.
+혹은 RPOPLPUSH 등을 이용해 &lt;a href=&quot;https://redis.io/commands/rpoplpush#pattern-reliable-queue&quot;&gt;Reliable Queue 패턴&lt;/a&gt; 을 구현해야 하는데 너무 low-level 디테일을 관여해야 한다.
+본 포스팅에서는 &lt;a href=&quot;https://www.npmjs.com/package/bull&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;Bull&lt;/code&gt;&lt;/a&gt; 을 이용해 Redis 를 메세지 큐로 활용하는 법을 설명한다.&lt;/p&gt;
+&lt;h1&gt;Bull&lt;/h1&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;Bull&lt;/code&gt; 은 Redis 기반의 큐를 제공하는 Nodejs 라이브러리이다.
+새 버전인 &lt;a href=&quot;https://github.com/taskforcesh/bullmq&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;BullMQ4&lt;/code&gt;&lt;/a&gt; 개발 진행 중이지만 아직 베타이고 star 수도 그렇게 높지 않아 본 포스팅에서는 &lt;code class=&quot;language-text&quot;&gt;Bull&lt;/code&gt; 로 진행한다.&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;Bull&lt;/code&gt;은 Redis 의 low-level 디테일을 감추고, Delayed jobs, Retries, Priority, Automatic recovery 등과 같은 기능을 제공함으로써 보다 신뢰도 높고 사용하기 편리하게 만들어준다.&lt;/p&gt;
+&lt;h1&gt;실험&lt;/h1&gt;
+&lt;p&gt;본 포스팅에서는 두 가지 실험을 진행한다.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;여러 클라이언트가 대기 중일 때, 오직 하나의 job 만 실행되는가&lt;/li&gt;
+&lt;li&gt;클라이언트가 나중에 실행되어도 job 이 실행되는가&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;실험에 사용된 코드는 &lt;a href=&quot;https://github.com/cheong38/nest-bull&quot;&gt;github&lt;/a&gt;에서 확인할 수 있다.&lt;/p&gt;
+&lt;h2&gt;사전 준비&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Nodejs v12.x.x&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://yarnpkg.com/&quot;&gt;Yarn&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://nestjs.com/&quot;&gt;Nestjs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.docker.com/&quot;&gt;Docker&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;디렉토리 구조&lt;/h2&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;.
+├── consumer/
+├── nest-producer/
+└── producer/&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;Consumer&lt;/h2&gt;
+&lt;p&gt;먼저 AppModule 에 Redis 설정 값을 넣은 &lt;code class=&quot;language-text&quot;&gt;Bull&lt;/code&gt; 모듈을 import 해준다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;typescript&quot;&gt;&lt;pre class=&quot;language-typescript&quot;&gt;&lt;code class=&quot;language-typescript&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;// consumer/src/app.module.ts&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; BullModule &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;@nestjs/bull&apos;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; Module &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;@nestjs/common&apos;&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; TestConsumer &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;./test.consumer&apos;&lt;/span&gt;
+
+@&lt;span class=&quot;token function&quot;&gt;Module&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  imports&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;
+    BullModule&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;registerQueue&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      name&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;test&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      redis&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        host&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;localhost&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        port&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;6379&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  controllers&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  providers&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;TestConsumer&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;AppModule&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;test&lt;/code&gt; 라는 이름의 큐에 메세지가 추가되면 &lt;code class=&quot;language-text&quot;&gt;doJob()&lt;/code&gt; 이라는 메서드가 실행되게 된다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;typescript&quot;&gt;&lt;pre class=&quot;language-typescript&quot;&gt;&lt;code class=&quot;language-typescript&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;// consumer/src/test.consumer.ts&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; Process&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; Processor &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;@nestjs/bull&apos;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; Job &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;bull&apos;&lt;/span&gt;
+
+@&lt;span class=&quot;token function&quot;&gt;Processor&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;test&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;TestConsumer&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  @&lt;span class=&quot;token function&quot;&gt;Process&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;doJob&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;job&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Job&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token builtin&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;consumer&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; job&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;data&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;Nest Producer&lt;/h2&gt;
+&lt;p&gt;먼저 AppModule 에 Redis 설정 값을 넣은 &lt;code class=&quot;language-text&quot;&gt;Bull&lt;/code&gt; 모듈을 import 해준다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;typescript&quot;&gt;&lt;pre class=&quot;language-typescript&quot;&gt;&lt;code class=&quot;language-typescript&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;// nest-producer/src/app.module.ts&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; BullModule &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;@nestjs/bull&apos;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; Module &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;@nestjs/common&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; AppController &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;./app.controller&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+@&lt;span class=&quot;token function&quot;&gt;Module&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  imports&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;
+    BullModule&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;registerQueue&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      name&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;test&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      redis&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        host&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;localhost&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        port&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;6379&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  controllers&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;AppController&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  providers&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;AppModule&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;AppController&lt;/code&gt; 의 &lt;code class=&quot;language-text&quot;&gt;getHello()&lt;/code&gt; 메서드가 실행되면 &lt;code class=&quot;language-text&quot;&gt;test&lt;/code&gt; 큐에 &lt;code class=&quot;language-text&quot;&gt;{ data: 1 }&lt;/code&gt; 이라는 데이터와 함께 메세지를 추가한다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;typescript&quot;&gt;&lt;pre class=&quot;language-typescript&quot;&gt;&lt;code class=&quot;language-typescript&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;// nest-producer/src/app.controller.ts&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; InjectQueue &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;@nestjs/bull&apos;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; Controller&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; Get &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;@nestjs/common&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; Queue &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;bull&apos;&lt;/span&gt;
+
+@&lt;span class=&quot;token function&quot;&gt;Controller&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;AppController&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;constructor&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+    @&lt;span class=&quot;token function&quot;&gt;InjectQueue&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;test&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;readonly&lt;/span&gt; testQueue&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Queue
+  &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+  @&lt;span class=&quot;token function&quot;&gt;Get&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;getHello&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Promise&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token builtin&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;testQueue&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; data&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;hello&apos;&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;Producer (without nestjs)&lt;/h2&gt;
+&lt;p&gt;Nestjs 없이 &lt;code class=&quot;language-text&quot;&gt;Bull&lt;/code&gt; 라이브러러만을 이용해서 &lt;code class=&quot;language-text&quot;&gt;test&lt;/code&gt; 큐에 job 을 추가한다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;javascript&quot;&gt;&lt;pre class=&quot;language-javascript&quot;&gt;&lt;code class=&quot;language-javascript&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;// producer/main.js&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; Queue &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;bull&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; testQueue &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Queue&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+  &lt;span class=&quot;token string&quot;&gt;&apos;test&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    redis&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      host&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;localhost&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      port&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;6379&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token function&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;then&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    console&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;done&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    process&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;exit&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;catch&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    console&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;error&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    process&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;exit&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;await&lt;/span&gt; testQueue&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; data&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;Redis 실행 (with Docker)&lt;/h2&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;shell&quot;&gt;&lt;pre class=&quot;language-shell&quot;&gt;&lt;code class=&quot;language-shell&quot;&gt;$ docker run --rm -it -p &lt;span class=&quot;token number&quot;&gt;6379&lt;/span&gt;:6379 --name bull-redis redis&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;여러 클라이언트가 대기 중일 때, 오직 하나의 job 만 실행되는가&lt;/h2&gt;
+&lt;p&gt;한 터미널에서 아래의 명령어를 실행한다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;shell&quot;&gt;&lt;pre class=&quot;language-shell&quot;&gt;&lt;code class=&quot;language-shell&quot;&gt;$ &lt;span class=&quot;token builtin class-name&quot;&gt;cd&lt;/span&gt; consumer
+$ &lt;span class=&quot;token function&quot;&gt;yarn&lt;/span&gt; start:1&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;다른 터미널에서 아래의 명령어를 실행한다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;shell&quot;&gt;&lt;pre class=&quot;language-shell&quot;&gt;&lt;code class=&quot;language-shell&quot;&gt;$ &lt;span class=&quot;token builtin class-name&quot;&gt;cd&lt;/span&gt; consumer
+$ &lt;span class=&quot;token function&quot;&gt;yarn&lt;/span&gt; start:2&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;이제 두 개의 consumer 가 &lt;code class=&quot;language-text&quot;&gt;test&lt;/code&gt; 큐에 메세지가 들어오면 처리할 수 있도록 대기하고 있다.&lt;/p&gt;
+&lt;p&gt;다른 터미널에서 아래의 명령어를 실행한다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;shell&quot;&gt;&lt;pre class=&quot;language-shell&quot;&gt;&lt;code class=&quot;language-shell&quot;&gt;$ &lt;span class=&quot;token builtin class-name&quot;&gt;cd&lt;/span&gt; producer
+$ &lt;span class=&quot;token function&quot;&gt;yarn&lt;/span&gt; start&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;그러면 한 번에 오직 하나의 consumer 에서 log 가 출력되는 것을 확인할 수 있다.
+즉, 메세지 하나 당 오직 하나의 클라이언트만 처리를 진행하게 된다.&lt;/p&gt;
+&lt;h2&gt;클라이언트가 나중에 실행되어도 job 이 실행되는가&lt;/h2&gt;
+&lt;p&gt;한 터미널에서 아래의 명령어를 실행한다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;shell&quot;&gt;&lt;pre class=&quot;language-shell&quot;&gt;&lt;code class=&quot;language-shell&quot;&gt;$ &lt;span class=&quot;token builtin class-name&quot;&gt;cd&lt;/span&gt; producer
+$ &lt;span class=&quot;token function&quot;&gt;yarn&lt;/span&gt; start&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;그리고 또 다른 터미널에서 아래의 명령어를 실행한다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;shell&quot;&gt;&lt;pre class=&quot;language-shell&quot;&gt;&lt;code class=&quot;language-shell&quot;&gt;$ &lt;span class=&quot;token builtin class-name&quot;&gt;cd&lt;/span&gt; consumer
+$ &lt;span class=&quot;token function&quot;&gt;yarn&lt;/span&gt; start:1&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;큐에 메세지가 먼저 들어가게 되고 나중에 그 메세지를 처리하기 위한 클라이언트가 실행된 경우를 시물레이션 하고 있다.
+이 경우, consumer 가 실행되자마자 log 가 출력되는 것을 확인할 수 있다.
+즉, job processor 가 나중에 실행되어도 처리되지 못한 메세지가 처리될 수 있음을 확인할 수 있다.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Minikube 설치]]></title><description><![CDATA[Minikube minikube 는 설치하면 쿠버네티스 클러스터를 PC 의 가상 머신에서 구동시킬 수 있다. 설치 이 곳 을 참고하여 운영체제에 맞게 설치하면 된다. 구동하기 터미널에 위의 명령어를 입력하면 minikube…]]></description><link>https://cheong38.github.io/2020-08-27-minikube/index/</link><guid isPermaLink="false">https://cheong38.github.io/2020-08-27-minikube/index/</guid><pubDate>Thu, 27 Aug 2020 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;Minikube&lt;/h1&gt;
+&lt;p&gt;minikube 는 설치하면 쿠버네티스 클러스터를 PC 의 가상 머신에서 구동시킬 수 있다.&lt;/p&gt;
+&lt;h2&gt;설치&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://kubernetes.io/ko/docs/tasks/tools/install-minikube/&quot;&gt;이 곳&lt;/a&gt; 을 참고하여 운영체제에 맞게 설치하면 된다.&lt;/p&gt;
+&lt;h2&gt;구동하기&lt;/h2&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;$ minikube start&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;터미널에 위의 명령어를 입력하면 minikube 환경이 시작된다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;$ kubectl config get-contexts&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;그 후, 위의 명령어를 입력하면,&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;CURRENT   NAME         CLUSTER     AUTHINFO      NAMESPACE
+...
+*         minikube     minikube    minikube
+...&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;위와 같이 minikube 클러스터가 생기고 현재 컨텍스트로 minikube 가 선택되어 있는 것을 확인할 수 있다.&lt;/p&gt;
+&lt;p&gt;몇 가지를 더 테스트해보자.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;$ kubectl get namespaces
+NAME              STATUS   AGE
+default           Active   11m
+kube-node-lease   Active   11m
+kube-public       Active   11m
+kube-system       Active   11m&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;$ kubectl get services
+NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+kubernetes   ClusterIP   10.96.0.1    &amp;lt;none&amp;gt;        443/TCP   12m&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;위와 같이 정상 구동중인 것을 확인할 수 있다.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Istio 서비스 매쉬 (service mesh)]]></title><description><![CDATA[많은 조직에서 마이크로서비스를 채택함에 따라 한 조직 내에도 다양한 배포 환경이 존재하게 되었다.
+ 는 이러한 배포의 복잡도를 줄이는 것을 도와준다.
+ 는 오픈 소스 서비스 매쉬(service mesh)이다. 서비스 매쉬 (Service Mesh…]]></description><link>https://cheong38.github.io/2020-08-26-istio-service-mesh/index/</link><guid isPermaLink="false">https://cheong38.github.io/2020-08-26-istio-service-mesh/index/</guid><pubDate>Wed, 26 Aug 2020 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;&lt;code class=&quot;language-text&quot;&gt;Istio&lt;/code&gt;&lt;/h1&gt;
+&lt;p&gt;많은 조직에서 마이크로서비스를 채택함에 따라 한 조직 내에도 다양한 배포 환경이 존재하게 되었다.
+&lt;a href=&quot;https://istio.io/latest/&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;istio&lt;/code&gt;&lt;/a&gt; 는 이러한 배포의 복잡도를 줄이는 것을 도와준다.
+&lt;code class=&quot;language-text&quot;&gt;istio&lt;/code&gt; 는 오픈 소스 서비스 매쉬(service mesh)이다.&lt;/p&gt;
+&lt;h2&gt;서비스 매쉬 (Service Mesh)&lt;/h2&gt;
+&lt;p&gt;서비스 매쉬(Service Mesh)는 서비스 간 통신의 규모가 커짐에 따라 서비스 간 통신을 추상화하여 안전하고 신뢰할 수 있게 만드는 인프라 계층의 아키텍처이다.
+서비스 메쉬(Service Mesh)에서는 서비스의 호출이 서비스에 딸린 프록시(proxy)들끼리 이루어지게 된다.
+&lt;code class=&quot;language-text&quot;&gt;istio&lt;/code&gt; 는 서비스 메쉬 전체에 대한 행위적 인사이트와 운영적인 제어를 제공한다.&lt;/p&gt;
+&lt;h3&gt;Istio 서비스 메쉬 (Service Mesh)&lt;/h3&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;istio&lt;/code&gt; 를 사용하게 되면 각 서비스는 &lt;a href=&quot;https://www.envoyproxy.io/&quot;&gt;envoy proxy&lt;/a&gt; 를 &lt;a href=&quot;https://docs.microsoft.com/ko-kr/azure/architecture/patterns/sidecar&quot;&gt;사이드카 패턴&lt;/a&gt;으로 각 pod 에 주입하게 된다.
+&lt;code class=&quot;language-text&quot;&gt;istio&lt;/code&gt; 는 로드 밸런싱, 서비스 간 인증, 모니터링과 같은 기능을 쉽게 가능하도록 만들어준다.
+&lt;code class=&quot;language-text&quot;&gt;istio&lt;/code&gt; 는 마이크로서비스 간 통신을 모두 가로채 &lt;code class=&quot;language-text&quot;&gt;istio&lt;/code&gt; 제어 플레인(plane)을 통해 설정과 제어가 가능토록 해준다.
+다음과 같은 기능을 포함한다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;HTTP, gRPC, 웹소켓, TCP 트래픽에 대한 자동 로드 밸런싱&lt;/li&gt;
+&lt;li&gt;라우팅 규칙, 재시도, failover 와 fault injection 과 같은 트래픽 행위의 상세한 설정&lt;/li&gt;
+&lt;li&gt;정책 및 API 설정을 pluggable 하게 제공(접근 제어, 속도 및 할당량 제한 등을 지원)&lt;/li&gt;
+&lt;li&gt;메트릭, 로그, 트래픽 추적 등을 자동으로 지원&lt;/li&gt;
+&lt;li&gt;identity-based 인증으로 클러스터 내 서비스 간 통신을 안전하게 지원&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&quot;/3833ffadadf62b46f3c2cda26a7085d0/istio-mesh.svg&quot; alt=&quot;Istio Architecture&quot;&gt;&lt;/p&gt;
+&lt;h3&gt;Istio 설치&lt;/h3&gt;
+&lt;p&gt;먼저 실행 환경을 위해 &lt;a href=&quot;/minikube&quot;&gt;minikube 를 설치&lt;/a&gt;하자&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://istio.io/latest/docs/setup/getting-started/&quot;&gt;이 곳&lt;/a&gt;을 참고하여 &lt;code class=&quot;language-text&quot;&gt;istio&lt;/code&gt; 를 다운로드하고 &lt;code class=&quot;language-text&quot;&gt;istioctl&lt;/code&gt; 명령어를 등록하자.&lt;/p&gt;
+&lt;p&gt;그 후 아래 명령어를 실행하자.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;$ istioctl install --set profile=demo
+Detected that your cluster does not support third party JWT authentication. Falling back to less secure first party JWT. See https://istio.io/docs/ops/best-practices/security/#configure-third-party-service-account-tokens for details.
+✔ Istio core installed
+✔ Istiod installed
+✔ Ingress gateways installed
+✔ Egress gateways installed
+✔ Installation complete&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;설치가 완료되었다는 메세지를 받았다.
+클러스터에 어떤 변화가 생겼는지 살펴보자.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;$ kubectl get namespaces
+NAME              STATUS   AGE
+default           Active   20m
+istio-system      Active   50s
+kube-node-lease   Active   20m
+kube-public       Active   20m
+kube-system       Active   20m&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;istio-system&lt;/code&gt; 이라는 새로운 namespace 가 생긴 것을 확인할 수 있다.
+이 namespace 에는 어떤 서비스들이 있는지 확인해보자.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;$ kubectl get services -n istio-system
+NAME                   TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)                                                                      AGE
+istio-egressgateway    ClusterIP      10.105.158.180   &amp;lt;none&amp;gt;        80/TCP,443/TCP,15443/TCP                                                     46s
+istio-ingressgateway   LoadBalancer   10.111.101.97    &amp;lt;pending&amp;gt;     15021:31597/TCP,80:30532/TCP,443:30828/TCP,31400:30090/TCP,15443:31940/TCP   46s
+istiod                 ClusterIP      10.105.52.77     &amp;lt;none&amp;gt;        15010/TCP,15012/TCP,443/TCP,15014/TCP,853/TCP                                60s&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;egress gateway, ingress gateway, istiod 등의 서비스가 있는 것을 확인할 수 있다.
+이들에 대해서는 다음에 다시 자세히 알아보자.
+pod 들도 생성되었는지 확인해보자.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;$ kubectl get pods
+NAME                                    READY   STATUS    RESTARTS   AGE
+istio-egressgateway-695f5944d8-lcwhw    1/1     Running   0          6m41s
+istio-ingressgateway-5c697d4cd7-zvb74   1/1     Running   0          6m41s
+istiod-59747cbfdd-x7bgg                 1/1     Running   0          6m55s&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;서비스 별로 하나의 pod 들이 존재하는 것을 확인할 수 있다.&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;istio&lt;/code&gt; 가 정상적으로 설치된 것을 확인할 수 있었으면 다음 포스팅에는 실질적인 &lt;code class=&quot;language-text&quot;&gt;istio&lt;/code&gt; 의 사용을 알아보고자 한다.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Welcome to WOOJIN]]></title><link>https://cheong38.github.io/welcome/</link><guid isPermaLink="false">https://cheong38.github.io/welcome/</guid><pubDate>Sun, 06 May 2018 23:46:37 GMT</pubDate><content:encoded></content:encoded></item></channel></rss>
