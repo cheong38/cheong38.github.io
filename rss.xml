@@ -1,4 +1,67 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[우진의 음주코딩]]></title><description><![CDATA[TIL(Today I Learned), 소프트웨어, 프로그래밍 등을 기록합니다.]]></description><link>https://cheong38.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Sat, 10 Oct 2020 07:43:16 GMT</lastBuildDate><item><title><![CDATA[(TIL) Git Merge --no-ff]]></title><description><![CDATA[FF(Fast Forward) git 에서 Fast Forward 현재 브랜치와 Merge 하려는 브랜치가 선형 관계에 있어 Merge 결과 별도의 커밋 없이 커밋을 위에 쌓기만 하는 것을 말한다. 그림으로 살펴보면 아래와 같다.  branch-…]]></description><link>https://cheong38.github.io/2020-09-11-til-git-merge-no-ff/index/</link><guid isPermaLink="false">https://cheong38.github.io/2020-09-11-til-git-merge-no-ff/index/</guid><pubDate>Fri, 11 Sep 2020 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;FF(Fast Forward)&lt;/h1&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[우진의 음주코딩]]></title><description><![CDATA[TIL(Today I Learned), 소프트웨어, 프로그래밍 등을 기록합니다.]]></description><link>https://cheong38.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Thu, 17 Dec 2020 02:04:23 GMT</lastBuildDate><item><title><![CDATA[Minikube 로 Nginx Ingress Controller 사용하기 (with AWS ECR)]]></title><description><![CDATA[개요 쿠버네티스 클러스터 외부의 트래픽을 정해진 라우팅 규칙을 통해 내부 서비스로 연결해주는 
+쿠버네티스 리소스를 인그레스(ingress) 라고 한다. 인그레스가 작동하려면 인그레스 컨트롤러가 반드시 필요한데 본 포스팅에서는 Nginx Ingress…]]></description><link>https://cheong38.github.io/2020-12-17-nginx-ingress-controller/index/</link><guid isPermaLink="false">https://cheong38.github.io/2020-12-17-nginx-ingress-controller/index/</guid><pubDate>Thu, 17 Dec 2020 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;개요&lt;/h1&gt;
+&lt;p&gt;쿠버네티스 클러스터 외부의 트래픽을 정해진 라우팅 규칙을 통해 내부 서비스로 연결해주는
+쿠버네티스 리소스를 &lt;a href=&quot;https://kubernetes.io/ko/docs/concepts/services-networking/ingress/&quot;&gt;인그레스(ingress)&lt;/a&gt; 라고 한다.&lt;/p&gt;
+&lt;p&gt;인그레스가 작동하려면 인그레스 컨트롤러가 반드시 필요한데 본 포스팅에서는 Nginx Ingress Controller 를 사용하는 법을 다루려고 한다.&lt;/p&gt;
+&lt;h1&gt;실습&lt;/h1&gt;
+&lt;h2&gt;Minikube 설치하기&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://cheong38.github.io/2020-08-27-minikube/index/&quot;&gt;지난 포스팅&lt;/a&gt; 을 참고해 설치힌다.&lt;/p&gt;
+&lt;h2&gt;Minikube 시작하기&lt;/h2&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ minikube start --vm&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;true&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;--vm=true&lt;/code&gt; 옵션을 주지 않으면 ingress addon 을 설정하는 과정에서 에러가 발생한다.&lt;/p&gt;
+&lt;p&gt;만약 &lt;code class=&quot;language-text&quot;&gt;--vm=true&lt;/code&gt; 옵션으로 실행시 에러가 발생한다면, &lt;a href=&quot;https://www.virtualbox.org/&quot;&gt;VirtualBox&lt;/a&gt; 와 같은
+가상머신이 설치되어있는지 확인해보자.&lt;/p&gt;
+&lt;h2&gt;ingress addon 설정하기&lt;/h2&gt;
+&lt;p&gt;minikube 에서 ingress 를 사용하기 위해서는 addon 을 설정해 주어야 한다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ minikube addons &lt;span class=&quot;token builtin class-name&quot;&gt;enable&lt;/span&gt; ingress&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;AWS ECR 의 이미지 사용할 수 있도록 설정&lt;/h2&gt;
+&lt;p&gt;본 포스팅에서는 &lt;a href=&quot;https://aws.amazon.com/ko/ecr/&quot;&gt;AWS ECR&lt;/a&gt; 에 이미지를 올려놓은 경우를 가정하고 있다.&lt;/p&gt;
+&lt;p&gt;따라서 ECR 의 이미지를 받아올 수 있도록 Minikube 에 권한 등을 설정해야 한다.&lt;/p&gt;
+&lt;p&gt;이 역시 minikube addon 을 통해 설정할 수 있다.&lt;/p&gt;
+&lt;p&gt;자세한 설명은 &lt;a href=&quot;https://minikube.sigs.k8s.io/docs/tutorials/configuring_creds_for_aws_ecr/&quot;&gt;여기&lt;/a&gt; 를 참고한다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ minikube addons configure registry-creds&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;위 명령어 입력 시 아래와 같은 추가 입력을 받을 것이다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;Do you want to enable AWS Elastic Container Registry? [y/n]: y
+-- Enter AWS Access Key ID: &amp;lt;put_access_key_here&amp;gt;
+-- Enter AWS Secret Access Key: &amp;lt;put_secret_access_key_here&amp;gt;
+-- (Optional) Enter AWS Session Token:
+-- Enter AWS Region: &amp;lt;put_aws_ecr_region&amp;gt;
+-- Enter 12 digit AWS Account ID (Comma separated list): &amp;lt;account_number&amp;gt;
+-- (Optional) Enter ARN of AWS role to assume:
+
+Do you want to enable Google Container Registry? [y/n]: n
+
+Do you want to enable Docker Registry? [y/n]: n
+
+Do you want to enable Azure Container Registry? [y/n]: n
+✅  registry-creds was successfully configured&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;우리는 ERC 만 설정할 것이므로 &lt;code class=&quot;language-text&quot;&gt;Do you want to enable AWS Elastic Container Registry? [y/n]&lt;/code&gt; 에만 &lt;code class=&quot;language-text&quot;&gt;y&lt;/code&gt;를 선택하고,
+나머지 &lt;code class=&quot;language-text&quot;&gt;Do you want ~&lt;/code&gt; 에는 &lt;code class=&quot;language-text&quot;&gt;n&lt;/code&gt; 을 선택한다.&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;&amp;lt;&amp;gt;&lt;/code&gt; 사이의 내용은 적절한 값으로 대체해 넣으면 된다. 빈 칸은 엔터를 치고 넘어가면 된다.&lt;/p&gt;
+&lt;h2&gt;Ingress 파일 배포&lt;/h2&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;yaml&quot;&gt;&lt;pre class=&quot;language-yaml&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token key atrule&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; networking.k8s.io/v1beta1
+&lt;span class=&quot;token key atrule&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; Ingress
+&lt;span class=&quot;token key atrule&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; main&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;ingress
+  &lt;span class=&quot;token key atrule&quot;&gt;namespace&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; main
+&lt;span class=&quot;token key atrule&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;rules&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;http&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;token key atrule&quot;&gt;paths&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; /
+            &lt;span class=&quot;token key atrule&quot;&gt;pathType&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; Prefix
+            &lt;span class=&quot;token key atrule&quot;&gt;backend&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+              &lt;span class=&quot;token key atrule&quot;&gt;serviceName&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; web
+              &lt;span class=&quot;token key atrule&quot;&gt;servicePort&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;80&lt;/span&gt;
+          &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; /api
+            &lt;span class=&quot;token key atrule&quot;&gt;pathType&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; Prefix
+            &lt;span class=&quot;token key atrule&quot;&gt;backend&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+              &lt;span class=&quot;token key atrule&quot;&gt;serviceName&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; api
+              &lt;span class=&quot;token key atrule&quot;&gt;servicePort&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;80&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;위의 예시와 같은 ingress 파일을 작성하여 배포해보자. 물론 위의 serviceName 과 servicePort 에 맞는 쿠버네티스 리소스가 설정되어 있어야 한다.&lt;/p&gt;
+&lt;h2&gt;접속해보기&lt;/h2&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ minikube &lt;span class=&quot;token function&quot;&gt;ip&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;위의 명령어로 나온 IP 주소를 브라우저에 입력해 접속하면 배포한 서비스에 접근할 수 있을 것이다. &lt;/p&gt;</content:encoded></item><item><title><![CDATA[(TIL) Git Merge --no-ff]]></title><description><![CDATA[FF(Fast Forward) git 에서 Fast Forward 현재 브랜치와 Merge 하려는 브랜치가 선형 관계에 있어 Merge 결과 별도의 커밋 없이 커밋을 위에 쌓기만 하는 것을 말한다. 그림으로 살펴보면 아래와 같다.  branch-…]]></description><link>https://cheong38.github.io/2020-09-11-til-git-merge-no-ff/index/</link><guid isPermaLink="false">https://cheong38.github.io/2020-09-11-til-git-merge-no-ff/index/</guid><pubDate>Fri, 11 Sep 2020 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;FF(Fast Forward)&lt;/h1&gt;
 &lt;p&gt;git 에서 Fast Forward 현재 브랜치와 Merge 하려는 브랜치가 선형 관계에 있어 Merge 결과 별도의 커밋 없이 커밋을 위에 쌓기만 하는 것을 말한다.&lt;/p&gt;
 &lt;p&gt;그림으로 살펴보면 아래와 같다.&lt;/p&gt;
 &lt;p&gt;&lt;span

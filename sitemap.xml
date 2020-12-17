@@ -7,11 +7,13 @@
 <url> <loc>https://cheong38.github.io/2020-08-28-redis-queue/index/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cheong38.github.io/2020-09-08-env-static-web/index/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cheong38.github.io/2020-09-11-til-git-merge-no-ff/index/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://cheong38.github.io/2020-12-17-nginx-ingress-controller/index/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cheong38.github.io/tags/getting-started/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cheong38.github.io/tags/istio/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cheong38.github.io/tags/minikube/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cheong38.github.io/tags/redis/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cheong38.github.io/tags/nginx/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cheong38.github.io/tags/git/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://cheong38.github.io/tags/kubernetes/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cheong38.github.io/author/woojin/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 </urlset>
