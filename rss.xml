@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[우진의 음주코딩]]></title><description><![CDATA[TIL(Today I Learned), 소프트웨어, 프로그래밍 등을 기록합니다.]]></description><link>https://cheong38.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Fri, 18 Dec 2020 14:30:57 GMT</lastBuildDate><item><title><![CDATA[Intellij 에서 bazel plugin 사용하기]]></title><description><![CDATA[개요 나는 jetbrain 사의 intellij 계열의 IDE 를 주로 사용한다.
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[우진의 음주코딩]]></title><description><![CDATA[TIL(Today I Learned), 소프트웨어, 프로그래밍 등을 기록합니다.]]></description><link>https://cheong38.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Fri, 18 Dec 2020 14:35:59 GMT</lastBuildDate><item><title><![CDATA[Intellij 에서 bazel plugin 사용하기]]></title><description><![CDATA[개요 나는 jetbrain 사의 intellij 계열의 IDE 를 주로 사용한다.
 유료이긴 하지만 리팩토링 툴이나 의존성을 체크해주는 등의 기능은 그 돈 값을 충분히 한다고 생각한다. bazel…]]></description><link>https://cheong38.github.io/2020-12-18-intellij-bazel/index/</link><guid isPermaLink="false">https://cheong38.github.io/2020-12-18-intellij-bazel/index/</guid><pubDate>Fri, 18 Dec 2020 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;개요&lt;/h1&gt;
 &lt;p&gt;나는 jetbrain 사의 intellij 계열의 IDE 를 주로 사용한다.
 유료이긴 하지만 리팩토링 툴이나 의존성을 체크해주는 등의 기능은 그 돈 값을 충분히 한다고 생각한다.&lt;/p&gt;
@@ -185,9 +185,10 @@ $ bazel build //ijwb:ijwb_bazel_zip --define&lt;span class=&quot;token operator&
 최근까지 커밋은 올라왔지만 아직 2020.3 버전 지원은 안되고 있나보다. (이런게 제일 1순위여야 하는거 아닌가…?)&lt;/p&gt;
 &lt;h1&gt;여기서 멈출 수 없다.&lt;/h1&gt;
 &lt;p&gt;나는 밋밋한 마치 메모장과 같은 그런 환경에서 코딩을 하는 것은 정말 바보같은 짓이라고 생각한다.
-왜 2020년에 1960년대에나 코딩했을 법한 환경에서 코딩해야 한단 말인가…
+왜 1960년대에나 코딩했을 법한 환경에서 2020년에 코딩해야 한단 말인가…
 무엇보다 다른 파일에서 bazel rule 을 붙여넣으면 들여쓰기가 모두 사라져버린다.
-그렇기에 여기서 멈출 수 없었다. 누군가 이슈를 등록해두지 않았을까?&lt;/p&gt;
+생산성도 많이 떨어지게 되고, 무엇보다 &lt;strong&gt;휴먼 에러&lt;/strong&gt;를 발생시킬 확률이 높다.&lt;/p&gt;
+&lt;p&gt;그렇기에 여기서 멈출 수 없었다. 누군가 이슈를 등록해두지 않았을까?&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;https://github.com/bazelbuild/intellij/issues&quot;&gt;github 이슈&lt;/a&gt; 에서 한 페이지를 넘기기 전에
 &lt;a href=&quot;https://github.com/bazelbuild/intellij/issues/2102&quot;&gt;관련한 이슈&lt;/a&gt; 를 찾아볼 수 있었다.&lt;/p&gt;
 &lt;p&gt;답변을 보니 친절하게도 &lt;a href=&quot;https://github.com/bazelbuild/intellij/pull/2246&quot;&gt;PR&lt;/a&gt; 까지 만들어서 올려두었다.
@@ -310,7 +311,7 @@ $ &lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; switch -c ijwb-2
 &lt;p&gt;더 이상 에러를 뱉지 않고 순조롭게 플러그인이 설치되었다.
 이제 복붙해도 들여쓰기가 사라지지 않는다.&lt;/p&gt;
 &lt;p&gt;그리고 무엇보다…&lt;/p&gt;
-&lt;p&gt;bazel BUILD 파일에 색깔이 생겼다!&lt;/p&gt;
+&lt;p&gt;bazel BUILD 파일에 &lt;strong&gt;색깔&lt;/strong&gt;이 생겼다!&lt;/p&gt;
 &lt;p&gt;&lt;span
       class=&quot;gatsby-resp-image-wrapper&quot;
       style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 646px; &quot;

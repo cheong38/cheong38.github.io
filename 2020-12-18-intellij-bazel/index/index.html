@@ -108,9 +108,10 @@ $ bazel build //ijwb:ijwb_bazel_zip --define<span class="token operator">=</span
 최근까지 커밋은 올라왔지만 아직 2020.3 버전 지원은 안되고 있나보다. (이런게 제일 1순위여야 하는거 아닌가…?)</p>
 <h1>여기서 멈출 수 없다.</h1>
 <p>나는 밋밋한 마치 메모장과 같은 그런 환경에서 코딩을 하는 것은 정말 바보같은 짓이라고 생각한다.
-왜 2020년에 1960년대에나 코딩했을 법한 환경에서 코딩해야 한단 말인가…
+왜 1960년대에나 코딩했을 법한 환경에서 2020년에 코딩해야 한단 말인가…
 무엇보다 다른 파일에서 bazel rule 을 붙여넣으면 들여쓰기가 모두 사라져버린다.
-그렇기에 여기서 멈출 수 없었다. 누군가 이슈를 등록해두지 않았을까?</p>
+생산성도 많이 떨어지게 되고, 무엇보다 <strong>휴먼 에러</strong>를 발생시킬 확률이 높다.</p>
+<p>그렇기에 여기서 멈출 수 없었다. 누군가 이슈를 등록해두지 않았을까?</p>
 <p><a href="https://github.com/bazelbuild/intellij/issues">github 이슈</a> 에서 한 페이지를 넘기기 전에
 <a href="https://github.com/bazelbuild/intellij/issues/2102">관련한 이슈</a> 를 찾아볼 수 있었다.</p>
 <p>답변을 보니 친절하게도 <a href="https://github.com/bazelbuild/intellij/pull/2246">PR</a> 까지 만들어서 올려두었다.
@@ -167,7 +168,7 @@ $ <span class="token function">git</span> switch -c ijwb-203 FETCH_HEAD</code></
 <p>더 이상 에러를 뱉지 않고 순조롭게 플러그인이 설치되었다.
 이제 복붙해도 들여쓰기가 사라지지 않는다.</p>
 <p>그리고 무엇보다…</p>
-<p>bazel BUILD 파일에 색깔이 생겼다!</p>
+<p>bazel BUILD 파일에 <strong>색깔</strong>이 생겼다!</p>
 <p><span class="gatsby-resp-image-wrapper" style="position:relative;display:block;margin-left:auto;margin-right:auto;max-width:646px">
       <a class="gatsby-resp-image-link" href="/static/f8d93116445292077418377e1f0c66e9/3ffe4/bazel_file.png" style="display:block" target="_blank" rel="noopener">
     <span class="gatsby-resp-image-background-image" style="padding-bottom:48.199999999999996%;position:relative;bottom:0;left:0;background-image:url(&#x27;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAKCAYAAAC0VX7mAAAACXBIWXMAAAsSAAALEgHS3X78AAABLElEQVQoz42SaU7DMBCFcyHq8b4lcR0oFVAE97/MY+yUVq1a6I+nsaKZL2+WIeYJ+7cPvH59ox4+sBw+UfZ7TDVjXsYey8vEcUTMkRUwbjNySUhjhjEWxp41+JAwlwofHIwjWC85ieCThQsG1mmE3N4OUkoQUY9SUn9fawiJXcwFc60oy4JSFyilITYCJNYk0eLx/Qs9gy81tJZjTOzAshOPkBwDuehG8i0RtVy6AqbcXUmpsHkSF07kg+ATsLWcx3Ux87byYBW0UXdh//1kCDFDKoX6vENh4O6dN1wmnpu4U0S9zbtAz0BtDIxm9Y3ytq1endBxRkTH+EDLHah1d9fOJ/FMrXP9ZPrpRNtjk7WGty1unsvpbNr8UlqhzvsOM80xF9tr8feW95d+AEvGQsVrQTeOAAAAAElFTkSuQmCC&#x27;);background-size:cover;display:block"></span>
