@@ -39,11 +39,11 @@
 <p>나는 jetbrain 사의 intellij 계열의 IDE 를 주로 사용한다.
 유료이긴 하지만 리팩토링 툴이나 의존성을 체크해주는 등의 기능은 그 돈 값을 충분히 한다고 생각한다.</p>
 <p><a href="https://bazel.build/">bazel</a> 은 하나의 소스 저장소를 사용하는 모노레포 프로젝트에 적합한 빌드 도구이다.
-심지어 도메인의 상위 도메인도 <code class="language-text">.build</code> 이다.</p>
+심지어 도메인도 <code class="language-text">.build</code>.</p>
 <h1>intellij 에서도 bazel 파일들을 하이라이트를 보고 싶어!</h1>
-<p>그리고 최근 모노레포에 bazel 을 도입하여 bazel 을 사용하게 되는 일이 많아졌다.
-하지만 기본적으로 intellij 는 bazel 의 문법을 지원하지 않는다.
-누군가 플러그인을 만들어놓지 않았을까? 내가 생각한 무언가는 이미 존재하고 있을 확률이 크다.
+<p>프로젝트에 bazel 을 도입하였고, bazel 을 사용하는 일이 많다.
+하지만 기본적으로 intellij 는 bazel 의 문법을 지원하지 않는다. 그렇기에 소스를 편집하거나 보는데 불편함이 있다.</p>
+<p>누군가 플러그인을 만들어놓지 않았을까? 내가 생각한 무언가는 이미 존재하고 있을 확률이 크다.
 그래서 플러그인을 검색해보았다.</p>
 <p><span class="gatsby-resp-image-wrapper" style="position:relative;display:block;margin-left:auto;margin-right:auto;max-width:983px">
       <a class="gatsby-resp-image-link" href="/static/a99ed3ab2b81567b4b0fe9c6a67c2e82/536b4/intellij_market.png" style="display:block" target="_blank" rel="noopener">
@@ -139,8 +139,8 @@ $ <span class="token function">git</span> switch -c ijwb-203 FETCH_HEAD</code></
   </a>
     </span></p>
 <h1>뭐가 문제지?</h1>
-<p>뭐가 문제일까? PR 올린 사람이 사기친건가? 그래서 저장소 소유자가 PR 을 안받아준건가?
-그래도 안되는걸 저렇게 보란듯이 올리지 않지 않을까?</p>
+<p>뭐가 문제일까? PR 올린 사람이 사기친건가? 그래서 저장소 소유자가 PR 을 안받아준건가?</p>
+<p>그래도 안되는걸 저렇게 보란듯이 올리진 않지 않을까?</p>
 <p>그래서…!</p>
 <p>소스를 살펴보기로 했다.</p>
 <p><span class="gatsby-resp-image-wrapper" style="position:relative;display:block;margin-left:auto;margin-right:auto;max-width:1219px">
@@ -153,7 +153,9 @@ $ <span class="token function">git</span> switch -c ijwb-203 FETCH_HEAD</code></
 <div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">&quot;intellij-latest&quot;: &quot;intellij-2020.2&quot;,
 ...
 &quot;intellij-beta&quot;: &quot;intellij-2020.3&quot;,
-&quot;intellij-canary&quot;: &quot;intellij-2020.3&quot;,</code></pre></div>
+&quot;intellij-canary&quot;: &quot;intellij-2020.3&quot;,
+...</code></pre></div>
+<p>여기다!!</p>
 <p>빌드 시 옵션을 <code class="language-text">--define=ij_product=intellij-latest</code> 로 주면, 아무래도 2020.2 버전으로 빌드가 되는 듯 하다.
 따라서 <code class="language-text">--define=ij_product=intellij-beta</code> 혹은 <code class="language-text">--define=ij_product=intellij-canary</code> 로 시도해 볼 필요가 있을 것 같다.</p>
 <p>나는 canary 옵션을 주기로 했다(그냥 내 맘). 그리도 ue(ultimate edition 이겠지?) 까지..</p>
