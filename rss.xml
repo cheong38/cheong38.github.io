@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[우진의 음주코딩]]></title><description><![CDATA[TIL(Today I Learned), 소프트웨어, 프로그래밍 등을 기록합니다.]]></description><link>https://cheong38.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Sun, 27 Dec 2020 15:49:04 GMT</lastBuildDate><item><title><![CDATA[Kubernetes Nginx Ingress Controller 선택적으로 Auth(인증) 하기]]></title><description><![CDATA[개요 지난 포스팅 에서 kubernetes 에서
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[우진의 음주코딩]]></title><description><![CDATA[TIL(Today I Learned), 소프트웨어, 프로그래밍 등을 기록합니다.]]></description><link>https://cheong38.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Sun, 27 Dec 2020 15:52:58 GMT</lastBuildDate><item><title><![CDATA[Kubernetes Nginx Ingress Controller 선택적으로 Auth(인증) 하기]]></title><description><![CDATA[개요 지난 포스팅 에서 kubernetes 에서
 nginx ingress controller 를 활용하여 auth…]]></description><link>https://cheong38.github.io/2020-12-28-nginx-ingress-controller-selective-auth/index/</link><guid isPermaLink="false">https://cheong38.github.io/2020-12-28-nginx-ingress-controller-selective-auth/index/</guid><pubDate>Mon, 28 Dec 2020 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;개요&lt;/h1&gt;
 &lt;p&gt;&lt;a href=&quot;/2020-12-19-nginx-ingress-controller-auth/index/&quot;&gt;지난 포스팅&lt;/a&gt; 에서 kubernetes 에서
 nginx ingress controller 를 활용하여 auth 를 진행하는 법을 살펴보았다.&lt;/p&gt;
@@ -56,13 +56,14 @@ nginx ingress controller 를 활용하여 auth 를 진행하는 법을 살펴보
               &lt;span class=&quot;token key atrule&quot;&gt;servicePort&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;80&lt;/span&gt;
     &lt;span class=&quot;token comment&quot;&gt;# other services specs&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;nginx.ingress.kubernetes.io/auth-snippet&lt;/code&gt; 가 선언된 부분을 보자.&lt;/p&gt;
-&lt;p&gt;요청 URI 가 “/main/products’ 이면 바로 200 코드를 리턴하고 있다. 이로써, &lt;code class=&quot;language-text&quot;&gt;/main/products&lt;/code&gt; 경로로 요청이 들어오면,
+&lt;p&gt;요청 URI 가 &lt;code class=&quot;language-text&quot;&gt;/main/products&lt;/code&gt; 이면 바로 200 코드를 리턴하고 있다.&lt;/p&gt;
+&lt;p&gt;이로써, &lt;code class=&quot;language-text&quot;&gt;/main/products&lt;/code&gt; 경로로 요청이 들어오면,
 &lt;code class=&quot;language-text&quot;&gt;http://auth.default.svc.cluster.local/auth/authz&lt;/code&gt; 로 인증을 요청하는 것이 아니라 바로 200 상태코드를 리턴하게 되고,
 인증이 성공된 것으로 간주되어 타겟 서비스로 요청이 전달되게 된다.&lt;/p&gt;
 &lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;if ( $request_uri ~ &amp;quot;/main/products&amp;quot; ) {
   return 200;
 }&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;이 부분은 nginx 문법을 사용하는 것이니 특정 path 로 시작하는 것, 끝나는 것, 그 외 nginx 설정에서 지원하는 방법을 지원하니,
+&lt;p&gt;이 부분은 nginx 문법을 사용한다. 특정 path 로 시작하는 것, 끝나는 것, 그 외 nginx 설정에서 지원하는 방법을 지원하니,
 다양한 방법으로 다양한 경로에 대한 설정을 할 수 있을 것이다.
 (&lt;a href=&quot;https://www.programmersought.com/article/99462844690/&quot;&gt;이 아티클&lt;/a&gt;에도 잘 나와있다.)&lt;/p&gt;
 &lt;p&gt;다만, 추후 유지보수를 위해 주석을 필히 같이 남겨주는 것이 좋을 것 같다.&lt;/p&gt;
