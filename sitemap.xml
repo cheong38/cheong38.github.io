@@ -13,6 +13,7 @@
 <url> <loc>https://cheong38.github.io/2020-12-28-nginx-ingress-controller-selective-auth/index/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cheong38.github.io/2021-01-31-market-leader/index/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cheong38.github.io/2021-02-02-cidr-public-private-ip/index/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://cheong38.github.io/2021-02-03-aws-vpc-basic/index/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cheong38.github.io/tags/getting-started/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cheong38.github.io/tags/istio/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cheong38.github.io/tags/minikube/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
@@ -33,5 +34,8 @@
 <url> <loc>https://cheong38.github.io/tags/ip/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cheong38.github.io/tags/public-ip/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cheong38.github.io/tags/private-ip/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://cheong38.github.io/tags/aws/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://cheong38.github.io/tags/vpc/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://cheong38.github.io/tags/basic/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cheong38.github.io/author/woojin/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 </urlset>
