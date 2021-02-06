@@ -1,4 +1,54 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[우진의 음주코딩]]></title><description><![CDATA[TIL(Today I Learned), 소프트웨어, 프로그래밍 등을 기록합니다.]]></description><link>https://cheong38.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Sat, 06 Feb 2021 01:15:27 GMT</lastBuildDate><item><title><![CDATA[AWS Security Group]]></title><description><![CDATA[Security Group AWS 에서 Security Group 은 EC2 인스턴스에 대한 방화벽으로 동작한다. Security Group 은 다음과 같은 것들을 제어한다. 포트에 대한 접근 IP 번위에 대한 인가 inbound…]]></description><link>https://cheong38.github.io/2021-02-06-aws-security-group/index/</link><guid isPermaLink="false">https://cheong38.github.io/2021-02-06-aws-security-group/index/</guid><pubDate>Sat, 06 Feb 2021 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;Security Group&lt;/h1&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[우진의 음주코딩]]></title><description><![CDATA[TIL(Today I Learned), 소프트웨어, 프로그래밍 등을 기록합니다.]]></description><link>https://cheong38.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Sat, 06 Feb 2021 04:08:07 GMT</lastBuildDate><item><title><![CDATA[Public IP vs Private IP]]></title><description><![CDATA[Public IP vs Private IP Public IP 인터넷 상에서 컴퓨터를 식별할 수 있는 주소로 사용 전체 인터넷 상에서 유일해야 함 (두 개 이상의 컴퓨터가 같은 IP…]]></description><link>https://cheong38.github.io/2021-02-06-public-private-ip/index/</link><guid isPermaLink="false">https://cheong38.github.io/2021-02-06-public-private-ip/index/</guid><pubDate>Sat, 06 Feb 2021 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;Public IP vs Private IP&lt;/h1&gt;
+&lt;h2&gt;Public IP&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;인터넷 상에서 컴퓨터를 식별할 수 있는 주소로 사용&lt;/li&gt;
+&lt;li&gt;전체 인터넷 상에서 유일해야 함 (두 개 이상의 컴퓨터가 같은 IP 를 사용할 수 없음)&lt;/li&gt;
+&lt;li&gt;지리적으로 쉽게 위치를 찾을 수 있다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Private IP&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Private network 상에서만 컴퓨터를 식별할 수 있는 주소&lt;/li&gt;
+&lt;li&gt;같은 Private network 내에서는 유일해야 함&lt;/li&gt;
+&lt;li&gt;그러나 서로 다른 두 개의 Private network 에서는 서로 같은 Private IP 주소를 가질 수 있음&lt;/li&gt;
+&lt;li&gt;컴퓨터들은 Internet Gateway 나 NAT 등을 통해 인터넷에 접근&lt;/li&gt;
+&lt;li&gt;Private IP 를 위한 특정 IP 주소 대역이 있음&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Public IP vs Private IP 예제&lt;/h2&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 1011px; &quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/24216da8aa4de74c686e9998b9cdcfcc/0d97d/public-private-ip-example.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 87.8%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAASCAYAAABb0P4QAAAACXBIWXMAAAsSAAALEgHS3X78AAACbUlEQVQ4y31UiW7TQBTM/38MEhKiFIFUKQJCgYZWSQ/naBynjl3f8X0Ob5+zkeOSPGm9a+++2Xmzsx6Aoq5rVFUthliqBt59uMJKM/m9oZbnOQzThGW9YrZY4/3FEPfKGm1ug24MxMO2bUyn91gs5pgtN/j05RtUCUjri6KApmnQ1ioDXn79jsfZGcCqqhCGIUpKFMwuPl9B3ZiQ7Luhmw4+Xl7haX4CsGmOP4Rxyiz8INozbBhU9FVVIthFtKlxNP+Gofgom4yqLLlUGU1Ts5bd6IMdALuTLaN2LKTwiZFCjFVt25a4n++uP8uwy9Txdrj+fYubmxv8Gd+RHBlOrZc5g//RlqGSVj9G1/h7e4fRz1942Vo4FwLrwDBJEm5CpzRNWb+yrOD6IeIkRxil/F2sLUlf3/epedx7nnfQ+wDoOA6WyyWXN58vyJsO8ix7w6AockRRjM2Lzt6dTCYwyfRiEwbMKEmwEtYQve8H5DEVz+stJZc9zfZeNCy6ABo8P9ofXs2AIn8grfCytbELqeSiQkkLEiqvf4pynFN5WV4wCU23WA7xzgyjOOGBpr9iqmzgBTG/C0261uiepGDTAjZYrHQ8LrasMwM+KCtsX11aUMJ2d1SOg4IOI05S/jUIjD5gTmD3lGe7IefppgvLCYh5iYHt+FCeDUTksSzL8UCXfq3TBqSt1K1vYnEFTcujPJP1C4IdJk8aDCvAoHu9Wn0qpi9Osw8k+1aO459GkhZIs6I9FNFc14Ou64jjCDVdOblRt1TZS0dk1CzLgmEYSMnDgvnhLiuKguFwyJN9oFM/BAE8Ho8xGo3Y3CL+AY1Lcd5cdvKbAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;Public, Private IP Example&quot;
+        title=&quot;Public, Private IP Example&quot;
+        src=&quot;/static/24216da8aa4de74c686e9998b9cdcfcc/0d97d/public-private-ip-example.png&quot;
+        srcset=&quot;/static/24216da8aa4de74c686e9998b9cdcfcc/0eb09/public-private-ip-example.png 500w,
+/static/24216da8aa4de74c686e9998b9cdcfcc/1263b/public-private-ip-example.png 1000w,
+/static/24216da8aa4de74c686e9998b9cdcfcc/0d97d/public-private-ip-example.png 1011w&quot;
+        sizes=&quot;(max-width: 1011px) 100vw, 1011px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;상단의 Public IP 를 바로 갖는 두 대의 서버는 인터넷에 직접 연결된다.
+이와 반대로 Company A, B 의 Private network 내의 컴퓨터는 각각 Private IP 를 할당 받고,
+이는 각 회사의 Private netowrk 상에서만 유효하다.
+그리고 Company A 의 Private IP 와 Company B 의 Private IP 는 같은 IP 가 될 수도 있다.
+Company A 와 Company B 의 Private network 는 각각의 Internet gateway 를 통해
+인터넷에 연결된다.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[AWS Security Group]]></title><description><![CDATA[Security Group AWS 에서 Security Group 은 EC2 인스턴스에 대한 방화벽으로 동작한다. Security Group 은 다음과 같은 것들을 제어한다. 포트에 대한 접근 IP 번위에 대한 인가 inbound…]]></description><link>https://cheong38.github.io/2021-02-06-aws-security-group/index/</link><guid isPermaLink="false">https://cheong38.github.io/2021-02-06-aws-security-group/index/</guid><pubDate>Sat, 06 Feb 2021 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;Security Group&lt;/h1&gt;
 &lt;p&gt;AWS 에서 Security Group 은 EC2 인스턴스에 대한 &lt;strong&gt;방화벽&lt;/strong&gt;으로 동작한다.&lt;/p&gt;
 &lt;p&gt;Security Group 은 다음과 같은 것들을 제어한다.&lt;/p&gt;
 &lt;ul&gt;
