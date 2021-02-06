@@ -1,4 +1,114 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[우진의 음주코딩]]></title><description><![CDATA[TIL(Today I Learned), 소프트웨어, 프로그래밍 등을 기록합니다.]]></description><link>https://cheong38.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Wed, 03 Feb 2021 13:14:29 GMT</lastBuildDate><item><title><![CDATA[AWS VPC 기본]]></title><description><![CDATA[VPC Virtual Private Cloud 클라우드 상에서 논리적으로 공간을 격리하기 위해 사용한다. VPC 가 없다면 EC…]]></description><link>https://cheong38.github.io/2021-02-03-aws-vpc-basic/index/</link><guid isPermaLink="false">https://cheong38.github.io/2021-02-03-aws-vpc-basic/index/</guid><pubDate>Wed, 03 Feb 2021 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;VPC&lt;/h1&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[우진의 음주코딩]]></title><description><![CDATA[TIL(Today I Learned), 소프트웨어, 프로그래밍 등을 기록합니다.]]></description><link>https://cheong38.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Sat, 06 Feb 2021 01:15:27 GMT</lastBuildDate><item><title><![CDATA[AWS Security Group]]></title><description><![CDATA[Security Group AWS 에서 Security Group 은 EC2 인스턴스에 대한 방화벽으로 동작한다. Security Group 은 다음과 같은 것들을 제어한다. 포트에 대한 접근 IP 번위에 대한 인가 inbound…]]></description><link>https://cheong38.github.io/2021-02-06-aws-security-group/index/</link><guid isPermaLink="false">https://cheong38.github.io/2021-02-06-aws-security-group/index/</guid><pubDate>Sat, 06 Feb 2021 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;Security Group&lt;/h1&gt;
+&lt;p&gt;AWS 에서 Security Group 은 EC2 인스턴스에 대한 &lt;strong&gt;방화벽&lt;/strong&gt;으로 동작한다.&lt;/p&gt;
+&lt;p&gt;Security Group 은 다음과 같은 것들을 제어한다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;포트에 대한 접근&lt;/li&gt;
+&lt;li&gt;IP 번위에 대한 인가&lt;/li&gt;
+&lt;li&gt;inbound(다른 컴퓨터로부터 들어오는) 네트워크에 대한 제어&lt;/li&gt;
+&lt;li&gt;outbound(다른 컴퓨터로 나가는) 네트워크에 대한 제어&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Security Group 의 예시는 아래와 같다.
+&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 1929px; &quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/e6da3af12608014c6ced7f5dfa2d4099/07e0b/security_group_example.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 13.600000000000001%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAADCAYAAACTWi8uAAAACXBIWXMAAAsSAAALEgHS3X78AAAAdElEQVQI101OWw7DMAjL/Q/bbmkCeRC5uDTTPiwwNoZ0nh+MMdB7h4iitYbunFVEnjlBrqo/zr6UCvX5eP2HZyUzw5wTrFcpj5k9DVyYFpp4wDdnbH9zX61xkHxnJF5aa8Ec/IgCeXwY2uY5X+H1ReK/37gBNLTq1MQgI3MAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;Security Group Example&quot;
+        title=&quot;Security Group Example&quot;
+        src=&quot;/static/e6da3af12608014c6ced7f5dfa2d4099/07e0b/security_group_example.png&quot;
+        srcset=&quot;/static/e6da3af12608014c6ced7f5dfa2d4099/0eb09/security_group_example.png 500w,
+/static/e6da3af12608014c6ced7f5dfa2d4099/1263b/security_group_example.png 1000w,
+/static/e6da3af12608014c6ced7f5dfa2d4099/07e0b/security_group_example.png 1929w&quot;
+        sizes=&quot;(max-width: 1929px) 100vw, 1929px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Security Group 에 대한 다이어그램을 나타내면 아래와 같다.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 711px; &quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/7e4df80e35e2b6619e1c20db7faa1df9/5e9f9/security_group_diagram.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 43.8%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAJCAYAAAAywQxIAAAACXBIWXMAAAsSAAALEgHS3X78AAABwklEQVQoz3WSa2/aMBSG8/9/yz7s0zSJSmsrWm2oTJR7IMmAFMiFAHYSQm48swNF+zJLj15bPj4+N4N/1uVy4aK1yog2Q3brPuGNgzekLmNlc7X73zLEqUIjFXe7+oRrdbBGL40uzF/8mb5AJe4P67qmqqpG9Qefe2O6KZg05GyPIeIsiJMNJFOQU8poAGIC6ZQomOOuNxzEHsdxGI1GjWoWiwVBEGDYIVgKO7wQxYJzdSZNPLbmE6vhD94ev+D0HvDNZ9KDS5blnM8ZYRiyXq9xXbdBSokQAuN18EH73aXdW3LO62s6uUCsOmRen2TRQdg/EVZb1dIk2GyJw4BAOTRNk263y3g8bqLzfR/j23Ofr603nroOeXkrUJWoFC2FDZkDJ6XJHIrD9boommiSJKFQe606wizLMMxtyWSdM/NKokSSFglxvFHR/ca3XrHfHxrVZxEuCPcRMj02TdBOLMtqVJ/3+z3GzKuUsxrtOIolp/JELFVthg98jB+Zd79j91qsBi2OgcNBqqalAikky+WS2WzGarXieDyy2+1UU/wCyyvQmhe3uVFzSKxSTJ0ric1FzqCU93kty7KJ6nNkNDr9v5FppYN5/Td0AAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;Security Group Diagram&quot;
+        title=&quot;Security Group Diagram&quot;
+        src=&quot;/static/7e4df80e35e2b6619e1c20db7faa1df9/5e9f9/security_group_diagram.png&quot;
+        srcset=&quot;/static/7e4df80e35e2b6619e1c20db7faa1df9/0eb09/security_group_diagram.png 500w,
+/static/7e4df80e35e2b6619e1c20db7faa1df9/5e9f9/security_group_diagram.png 711w&quot;
+        sizes=&quot;(max-width: 711px) 100vw, 711px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;inbound 규칙으로 22번 포트에 대해서는 내 컴퓨터 IP 로부터의 요청만 인가하고, 다른 IP 는 거부한다.
+outbound 는 모든 IP 와 Port 로의 요청을 인가한다. &lt;/p&gt;
+&lt;h2&gt;알아두면 좋을 것들&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Security Group 은 복수의 인스턴스에 attach 될 수 있다.&lt;/li&gt;
+&lt;li&gt;region 내 VPC 에 속해있게 된다.&lt;/li&gt;
+&lt;li&gt;EC2 인스턴스 밖에 있어서 EC2 인스턴스에서는 Security Group 의 존재를 알지 못한다.&lt;/li&gt;
+&lt;li&gt;SSH 접근을 위한 Security Group 을 유지하는 것이 좋다.&lt;/li&gt;
+&lt;li&gt;어플리케이션 접근 시 timeout 이 난다면, Security Group 이슈를 살펴보는 것이 좋다.&lt;/li&gt;
+&lt;li&gt;어플리케이션 접근 시 “connection refused” 가 발생한다면, 어플리케이션이나 인스턴스 자체의 이슈를 살펴보는 것이 좋다.&lt;/li&gt;
+&lt;li&gt;모든 기본적으로 모든 inbound 트래픽은 거부되고, 모든 outbound 트래픽은 인가된다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;IP 대신 다른 Security Group 참조하기&lt;/h2&gt;
+&lt;p&gt;inbound, outbound 규칙에 IP 대신 다른 Security Group 을 참조할 수 있다.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 751px; &quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/bc76f656304d4ee768c8a9b3a8d96fc7/9ae5c/ref_security_group.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 46.800000000000004%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAJCAYAAAAywQxIAAAACXBIWXMAAAsSAAALEgHS3X78AAAByklEQVQoz2WSa2/aMBSG+f9/ZB9W7UM1adLW2wpbJxUoAQqkIUDIPZAQArmHPHMztdKKpcfHOraOz+vXrdE6Z2qV9LUNC3tBdlBIDvOGVBAfFuxinzAJCOKAtAhQxm1uv39mKt2iGSZ/nl4YTBasnCMt2alQvROyA842hMqG0hVRUIpkueX/UcMp5lRE1GXEx9HqKTvG2pGREaEaK2yth2tIGMsujv5E6CukZUJSxMR5TFEdRf6ZldLHMye4mw1L3WVtemz3Ga3LmwGX112+trtIswHzyT131xf8+PaJ2eiOYDPjkO2J0pB9EpKXIcpzm/urC9TpL1HI4lFSGE6X6F5Ma7ROkBYhPSVCtz00+YHB4xUT6Se62qVKnTNZ1KmYskb6meSZMETd1Lx4YG99yA2BRR1pghVVpIuiCVWWUqaikJBurYbI4wcsbYjtusw1p5Ht7VLRof7qcsHYqDBcYUCmczquyYwJhSNTuHOKwG/IfXHhwUeddOjcfEEWT2I6Dv3RnLG8xNwmtMygwN6VmLsTQeg3Bcks0YlwOzdF9D54LFymEpwExbnk96/QhIJk2+PodIid3xztjpAa/Nuq64bXo/UbvK3rd/4CJCCkMQwyi1EAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;다른 Security Group 참조&quot;
+        title=&quot;다른 Security Group 참조&quot;
+        src=&quot;/static/bc76f656304d4ee768c8a9b3a8d96fc7/9ae5c/ref_security_group.png&quot;
+        srcset=&quot;/static/bc76f656304d4ee768c8a9b3a8d96fc7/0eb09/ref_security_group.png 500w,
+/static/bc76f656304d4ee768c8a9b3a8d96fc7/9ae5c/ref_security_group.png 751w&quot;
+        sizes=&quot;(max-width: 751px) 100vw, 751px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;이렇게 다른 Security Group을 참조하면 매번 변경되는 IP 에 대응하지 않아도 된다는 장점이 있다.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[AWS VPC 기본]]></title><description><![CDATA[VPC Virtual Private Cloud 클라우드 상에서 논리적으로 공간을 격리하기 위해 사용한다. VPC 가 없다면 EC…]]></description><link>https://cheong38.github.io/2021-02-03-aws-vpc-basic/index/</link><guid isPermaLink="false">https://cheong38.github.io/2021-02-03-aws-vpc-basic/index/</guid><pubDate>Wed, 03 Feb 2021 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;VPC&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;V&lt;/strong&gt;irtual &lt;strong&gt;P&lt;/strong&gt;rivate &lt;strong&gt;C&lt;/strong&gt;loud&lt;/p&gt;
 &lt;p&gt;클라우드 상에서 논리적으로 공간을 격리하기 위해 사용한다.&lt;/p&gt;
 &lt;p&gt;VPC 가 없다면 EC2 인스턴스들이 서로 혹은 인터넷과 스파게티처럼 연결될 것이다. 이렇게 되면 시스템의 복잡도가 엄청나게 올라간다.
@@ -220,7 +330,29 @@ subnet mask 는 IP 주소 내에 얼마나 많은 비트가 변할 수 있는지
 &lt;ul&gt;
 &lt;li&gt;Public IP 구역&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Private IP 구역을 제외한 모든 구역이 Public IP 구역이다.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[마켓 리더의 조건 (시장의 지배자가 되고 그것을 존속하려면 무엇이 필요한가?) 1/2]]></title><description><![CDATA[개요 한 달 쯤 전 지인에게 추천 받아  이라는 책을 읽어보게 되었다. 이 책은 높은 시장 점유율을 갖는 (일반적으로 1위) 업체들은 어떤 특징을 가지고 있는지를 10년이 넘는 기간 동안 분석하여 그에 대한 결과를 서술하고 있다. 1장…]]></description><link>https://cheong38.github.io/2021-01-31-market-leader/index/</link><guid isPermaLink="false">https://cheong38.github.io/2021-01-31-market-leader/index/</guid><pubDate>Sun, 31 Jan 2021 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;개요&lt;/h1&gt;
+&lt;p&gt;Private IP 구역을 제외한 모든 구역이 Public IP 구역이다.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[마켓 리더의 조건 (시장의 지배자가 되고 그것을 존속하려면 무엇이 필요한가?) 2/2]]></title><description><![CDATA[이 포스팅은 지난 포스팅 에 이은 2부이다.…]]></description><link>https://cheong38.github.io/2021-02-01-market-leader-2/index/</link><guid isPermaLink="false">https://cheong38.github.io/2021-02-01-market-leader-2/index/</guid><pubDate>Mon, 01 Feb 2021 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;이 포스팅은 &lt;a href=&quot;/2021-01-31-market-leader/index/&quot;&gt;지난 포스팅&lt;/a&gt; 에 이은 2부이다.&lt;/p&gt;
+&lt;h1&gt;6장&lt;/h1&gt;
+&lt;p&gt;크게 성공한 제품들을 언뜻 보면 운에 크게 기인한 것으로 보인다. 적당한 시기, 적당한 곳에 제품이 등장했다는 것이다.&lt;/p&gt;
+&lt;p&gt;하지만 기업가와 경영자들은 극복하기 힘들어 보이는 장애물, 더딘 발전, 오랜 시간에도 불구하고 계속 노력하겠다는 의지가 있어야 한다.
+이 노력을 하기 위해서는 미래를 예견하는 비전이 있어야 한다. 이 부분이 중요하다고 생각한다. 아무런 비전 없이는 노력할 수 없다.
+또 반대로 노력만 한다고 성공하는 것이 아니다.&lt;/p&gt;
+&lt;p&gt;단순해 보이는 일회용 안전 면도기 역시 그 뒷면에는 혁신적인 기술을 도입하기 위한 엄청난 끈기가 있었다.&lt;/p&gt;
+&lt;p&gt;질레트는 처음엔 그저 면도기와 면도날 두 부분으로 나누어져 평평하고 값싼 금속으로 만든 면도날이 무뎌지면 버려도 되는 면도기를 생각했다.
+그리고 이 정도의 디자인은 쉽게 만들 수 있을 거라 생각했다. 하지만 아무도 그의 이야기에 귀를 기울이는 사람은 없었다.
+그래서 그는 시제품을 만들기 위해 면도날 개발에 힘을 쏟았다.
+먼저 얇은 철판을 이용해서 면도날을 개발했는데, 얇은 철판은 너무 부서지기 쉽고, 약해서 날카롭게 날을 유지하지 못했다.
+전문가들을 찾아가면 한결같이 얇은 철판으로는 날카로운 날을 만들 수 없다고 했다.
+그렇게 질레트는 6년동안 면도날 개발에 매달렸다.
+그 다음으로 시도한 특허도 첫 번째 시도는 실패했고, 몇 달이나 걸려서 다시 특허를 신청해서야 특허를 얻을 수 있었다.
+이어서 그는 대량 생산을 할 수 있는 제조 시스템을 개발해야 했다.&lt;/p&gt;
+&lt;p&gt;이 책에서는 이 외에 P&amp;#x26;G, 소니 등의 사례를 들면서 자금력이 있는 기업이라 할 지라도 혁신적인 아이디어를 실행하는데는 오랜 시간과 끈기가 필요하다는 것을 역셜하고 있다.&lt;/p&gt;
+&lt;p&gt;나는 아이디어는 사업에 있어서 많이 쳐줘봐야 10% 정도를 차지한다고 생각한다.
+CEO 의 E 가 괜히 Execution 이 아니다.
+훌륭한 아이디어를 낼 수 있는 사람은 얼마 없지만, 어떤 아이디어든 그걸 실행할 수 있는 사람은 그것보다 훨씬 적을 것이다.
+아무리 간단한 아이디어라 할지라도 실제 실행은 그리 간단하지 않은 경우가 허다한 것 같다.&lt;/p&gt;
+&lt;p&gt;사람들은 크게 성공한 기업에 쉽게들 “행운”이 있었다라고 말한다. 실제로 사업판에는 운칠기삼이라는 말이 있기도하다.
+하지만 그 이면을 들여다보면, 아무도 비전을 믿어주지 않을때 꿋꿋이 밀고 나가며 뚝심있게 버티는 시기들이 있었다.
+이는 제록스, 마이크로소프트 등과 같은 기업도 예외는 아니다. 역시 기회는 준비된 사람들에게 주어지는 것이다.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[마켓 리더의 조건 (시장의 지배자가 되고 그것을 존속하려면 무엇이 필요한가?) 1/2]]></title><description><![CDATA[개요 한 달 쯤 전 지인에게 추천 받아  이라는 책을 읽어보게 되었다. 이 책은 높은 시장 점유율을 갖는 (일반적으로 1위) 업체들은 어떤 특징을 가지고 있는지를 10년이 넘는 기간 동안 분석하여 그에 대한 결과를 서술하고 있다. 1장…]]></description><link>https://cheong38.github.io/2021-01-31-market-leader/index/</link><guid isPermaLink="false">https://cheong38.github.io/2021-01-31-market-leader/index/</guid><pubDate>Sun, 31 Jan 2021 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;개요&lt;/h1&gt;
 &lt;p&gt;한 달 쯤 전 지인에게 추천 받아 &lt;code class=&quot;language-text&quot;&gt;마켓 리더의 조건&lt;/code&gt; 이라는 책을 읽어보게 되었다.&lt;/p&gt;
 &lt;p&gt;이 책은 높은 시장 점유율을 갖는 (일반적으로 1위) 업체들은 어떤 특징을 가지고 있는지를 10년이 넘는 기간 동안 분석하여 그에 대한 결과를 서술하고 있다.&lt;/p&gt;
 &lt;h1&gt;1장&lt;/h1&gt;
