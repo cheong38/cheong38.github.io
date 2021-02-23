@@ -17,6 +17,7 @@
 <url> <loc>https://cheong38.github.io/2021-02-06-public-private-ip/index/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cheong38.github.io/2021-02-06-aws-security-group/index/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cheong38.github.io/2021-02-06-aws-s3/index/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://cheong38.github.io/2020-02-23-docker-cmd-entrypoint/index/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cheong38.github.io/tags/getting-started/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cheong38.github.io/tags/istio/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cheong38.github.io/tags/minikube/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
@@ -42,5 +43,8 @@
 <url> <loc>https://cheong38.github.io/tags/private-ip/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cheong38.github.io/tags/security-group/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cheong38.github.io/tags/s-3/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://cheong38.github.io/tags/docker/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://cheong38.github.io/tags/cmd/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://cheong38.github.io/tags/entrypoint/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cheong38.github.io/author/woojin/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 </urlset>

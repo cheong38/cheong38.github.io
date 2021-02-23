@@ -1,4 +1,147 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[우진의 음주코딩]]></title><description><![CDATA[TIL(Today I Learned), 소프트웨어, 프로그래밍 등을 기록합니다.]]></description><link>https://cheong38.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Mon, 08 Feb 2021 05:16:35 GMT</lastBuildDate><item><title><![CDATA[AWS EC2 User Data 핸즈온]]></title><description><![CDATA[EC2 User Data EC2 User Data 스크립트를 이용해 인스턴스를 bootstrap 하는 것이 가능하다. bootstrap 이란 머신이 시작할 때의 시작 커맨드들을 의미한다. 이 스크립트는 인스턴스의 첫 시작 때 딱 한 번 실행된다. EC…]]></description><link>https://cheong38.github.io/2021-02-08-ec2-user-data/index/</link><guid isPermaLink="false">https://cheong38.github.io/2021-02-08-ec2-user-data/index/</guid><pubDate>Mon, 08 Feb 2021 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;EC2 User Data&lt;/h1&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[우진의 음주코딩]]></title><description><![CDATA[TIL(Today I Learned), 소프트웨어, 프로그래밍 등을 기록합니다.]]></description><link>https://cheong38.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Tue, 23 Feb 2021 10:47:57 GMT</lastBuildDate><item><title><![CDATA[Docker CMD 와 ENTRYPOINT]]></title><description><![CDATA[Docker CMD vs ENTRYPOINT docker 는 컨테이너를 사용해 어플리케이션을 구축하고, 배포할 수 있게 하는 소프트웨어이다. 본 포스팅에서는 docker 의  와  의 차이점에 대해 설명한다. Docker…]]></description><link>https://cheong38.github.io/2020-02-23-docker-cmd-entrypoint/index/</link><guid isPermaLink="false">https://cheong38.github.io/2020-02-23-docker-cmd-entrypoint/index/</guid><pubDate>Tue, 23 Feb 2021 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;Docker CMD vs ENTRYPOINT&lt;/h1&gt;
+&lt;p&gt;docker 는 컨테이너를 사용해 어플리케이션을 구축하고, 배포할 수 있게 하는 소프트웨어이다.&lt;/p&gt;
+&lt;p&gt;본 포스팅에서는 docker 의 &lt;code class=&quot;language-text&quot;&gt;CMD&lt;/code&gt; 와 &lt;code class=&quot;language-text&quot;&gt;ENTRYPOINT&lt;/code&gt; 의 차이점에 대해 설명한다.&lt;/p&gt;
+&lt;h2&gt;Docker 기본 사용법&lt;/h2&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ docker run ubuntu&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;위의 명령어를 사용하면 ubuntu 이미지를 다운로드하여 docker 컨테이너를 실행시킨다.&lt;/p&gt;
+&lt;p&gt;VM (Virtual Machine) 과 다르게 컨테이너는 OS 자체를 호스트하는 것은 아니다.
+컨테이너는 웹서버나 데이터베이스의 인스턴스와 같은 특정 태스크나 프로세스를 실행하는 것을 의미한다.  &lt;/p&gt;
+&lt;p&gt;태스크가 끝나면, 컨테이너는 종료된다. 컨테이너는 컨테이너 내부의 프로세스가 살아있는 동안만 유지된다.&lt;/p&gt;
+&lt;h2&gt;CMD&lt;/h2&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;dockerfile&quot;&gt;&lt;pre class=&quot;language-dockerfile&quot;&gt;&lt;code class=&quot;language-dockerfile&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;FROM&lt;/span&gt; alpine&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;%%ALPINE_VERSION%%
+
+&lt;span class=&quot;token punctuation&quot;&gt;...&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;RUN&lt;/span&gt; set &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;x \
+&lt;span class=&quot;token comment&quot;&gt;# create nginx user/group first, to be consistent throughout docker variants&lt;/span&gt;
+    &amp;amp;&amp;amp; addgroup &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;g 101 &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;S nginx \
+    &amp;amp;&amp;amp; adduser &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;S &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;D &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;H &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;u 101 &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;h /var/cache/nginx &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;s /sbin/nologin &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;G nginx &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;g nginx nginx \
+    &amp;amp;&amp;amp; apkArch=&lt;span class=&quot;token string&quot;&gt;&quot;$(cat /etc/apk/arch)&quot;&lt;/span&gt; \
+    &amp;amp;&amp;amp; nginxPackages=&quot;%%PACKAGES%%
+    &lt;span class=&quot;token string&quot;&gt;&quot; \
+    &amp;amp;&amp;amp; case &quot;&lt;/span&gt;$apkArch&quot; in \
+        x86_64) \
+&lt;span class=&quot;token comment&quot;&gt;# arches officially built by upstream&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;...&lt;/span&gt;            
+
+&lt;span class=&quot;token keyword&quot;&gt;ENTRYPOINT&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;/docker-entrypoint.sh&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;EXPOSE&lt;/span&gt; 80
+
+&lt;span class=&quot;token keyword&quot;&gt;STOPSIGNAL&lt;/span&gt; SIGQUIT
+
+&lt;span class=&quot;token keyword&quot;&gt;CMD&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;nginx&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;-g&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;daemon off;&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/nginxinc/docker-nginx/blob/master/Dockerfile-alpine.template&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;docker-nginx&lt;/code&gt; 의 github 에서 dockerfile&lt;/a&gt; 을
+살펴보면, 위와 같은 파일 내용을 확인할 수 있다.&lt;/p&gt;
+&lt;p&gt;마지막 줄에서 &lt;code class=&quot;language-text&quot;&gt;CMD&lt;/code&gt; 키워드를 확인할 수 있는데, &lt;code class=&quot;language-text&quot;&gt;CMD&lt;/code&gt; 는 컨테이너 첫 실행시 실행할 명령어를 의미한다.&lt;/p&gt;
+&lt;h3&gt;CMD 덮어쓰기&lt;/h3&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ docker run ubuntu &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;COMMAND&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;위의 명령어에서 [COMMAND] 부분을 실행하고자 하는 명령어로 대체함으로써 &lt;code class=&quot;language-text&quot;&gt;CMD&lt;/code&gt; 를 덮어쓸 수 있다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ docker run ubuntu &lt;span class=&quot;token function&quot;&gt;sleep&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;5&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;위의 명령어는 ubuntu 이미지의 &lt;code class=&quot;language-text&quot;&gt;CMD&lt;/code&gt; 는 &lt;code class=&quot;language-text&quot;&gt;bash&lt;/code&gt; 인데 이를 &lt;code class=&quot;language-text&quot;&gt;sleep 5&lt;/code&gt; 즉, 5초 간 sleep 하는 명령어로 변경한 예시이다.&lt;/p&gt;
+&lt;p&gt;이를 Dockerfile 로 작성하려면 아래와 같이 작성할 수 있다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;dockerfile&quot;&gt;&lt;pre class=&quot;language-dockerfile&quot;&gt;&lt;code class=&quot;language-dockerfile&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;FROM&lt;/span&gt; ubuntu
+
+&lt;span class=&quot;token keyword&quot;&gt;CMD&lt;/span&gt; sleep 5&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;혹은&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;dockerfile&quot;&gt;&lt;pre class=&quot;language-dockerfile&quot;&gt;&lt;code class=&quot;language-dockerfile&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;FROM&lt;/span&gt; ubuntu
+
+&lt;span class=&quot;token keyword&quot;&gt;CMD&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;sleep&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;5&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;CMD 작성법&lt;/h3&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;CMD&lt;/code&gt; 는 두 가지 형태로 작성할 수 있다.&lt;/p&gt;
+&lt;p&gt;첫 번째는 &lt;code class=&quot;language-text&quot;&gt;쉘폼&lt;/code&gt; 이고 두 번째는 &lt;code class=&quot;language-text&quot;&gt;JSON Array&lt;/code&gt; 형식이다.&lt;/p&gt;
+&lt;p&gt;JSON Array 로 작성할 때 주의사항은 array 의 첫 번째 요소가 반드시 실행가능한 명령어여야 한다는 것이다.&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;CMD [&amp;quot;sleep 5&amp;quot;]&lt;/code&gt; 와 같은 식으로 작성해서는 안된다.&lt;/p&gt;
+&lt;p&gt;위의 dockerfile 을 저장하고&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ docker build -t ubuntu-sleeper &lt;span class=&quot;token builtin class-name&quot;&gt;.&lt;/span&gt;
+$ docker run ubuntu-sleeper&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;를 실행하면, &lt;code class=&quot;language-text&quot;&gt;docker run ubuntu sleep 5&lt;/code&gt; 와 동일한 실행 결과를 확인할 수 있다.&lt;/p&gt;
+&lt;p&gt;그런데 여기서 하드코딩 되어 있는 5 를 바꾸고 싶으면 어떻게 해야 할까?&lt;/p&gt;
+&lt;h2&gt;ENTRYPOINT&lt;/h2&gt;
+&lt;p&gt;우리는 위의 예제를 아래와 같이 사용하고 싶다&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ docker run ubuntu-sleeper &lt;span class=&quot;token number&quot;&gt;10&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;이렇게 사용할 수 있다면, 사용하려는 컨텍스트에 따라 수치 조정을 할 수 있게 되어 보다 유연하다고 할 수 있을 것이다.&lt;/p&gt;
+&lt;p&gt;이를 위해 &lt;code class=&quot;language-text&quot;&gt;ENTRYPOINT&lt;/code&gt; 인스트럭션을 도입하자.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;dockerfile&quot;&gt;&lt;pre class=&quot;language-dockerfile&quot;&gt;&lt;code class=&quot;language-dockerfile&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;FROM&lt;/span&gt; ubuntu
+
+&lt;span class=&quot;token keyword&quot;&gt;ENTRYPOINT&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;sleep&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;ENTRYPOINT&lt;/code&gt; 는 &lt;code class=&quot;language-text&quot;&gt;CMD&lt;/code&gt; 와 마찬가지로 컨테이너 실행 시 실행할 명령어이다.
+다만, &lt;code class=&quot;language-text&quot;&gt;CMD&lt;/code&gt; 는 docker run 명령어의 파라미터로 아예 대체가 되지만,
+&lt;code class=&quot;language-text&quot;&gt;ENTRYPOINT&lt;/code&gt; 는 파라미터가 뒤에 더해진다.&lt;/p&gt;
+&lt;h3&gt;ENTRYPOINT 기본값&lt;/h3&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ docker run ubuntu-sleepr&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;만약 앞선 예제의 dockerfile 에서 파라미터를 지정하지 않고 실행하면 어떻게 될까?&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;sleep: missiong operand&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;위와 같은 에러메세지를 보게 된다.&lt;/p&gt;
+&lt;p&gt;이제 우리의 목표는 파라미터를 지정하지 않으면 초기의 예제처럼 5초를 sleep 하고 지정되면 지정된 시간만큼 sleep 하는 것이다.
+이를 위해 우리는 &lt;code class=&quot;language-text&quot;&gt;ENTRYPOINT&lt;/code&gt; 와 &lt;code class=&quot;language-text&quot;&gt;CMD&lt;/code&gt; 인스터럭션을 조합하여 사용할 수 있다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;dockerfile&quot;&gt;&lt;pre class=&quot;language-dockerfile&quot;&gt;&lt;code class=&quot;language-dockerfile&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;FROM&lt;/span&gt; ubuntu
+
+&lt;span class=&quot;token keyword&quot;&gt;ENTRYPOINT&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;sleep&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;CMD&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;5&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;위의 예제를 살펴보자.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ docker run ubnutu-sleeper&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;파라미터를 지정하지 않고 사용하면 &lt;code class=&quot;language-text&quot;&gt;CMD&lt;/code&gt; 의 값이 &lt;code class=&quot;language-text&quot;&gt;ENTYRPOINT&lt;/code&gt; 값에 추가되어 &lt;code class=&quot;language-text&quot;&gt;sleep 5&lt;/code&gt; 가 실행된다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ docker run ubuntu-sleeper &lt;span class=&quot;token number&quot;&gt;10&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;파라미터를 지정하여 사용하면 &lt;code class=&quot;language-text&quot;&gt;CMD&lt;/code&gt; 가 덮어쓰여져 &lt;code class=&quot;language-text&quot;&gt;sleep 10&lt;/code&gt; 이 실행된다.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[마켓 리더의 조건 (시장의 지배자가 되고 그것을 존속하려면 무엇이 필요한가?) 2/2]]></title><description><![CDATA[이 포스팅은 지난 포스팅 에 이은 2부이다.…]]></description><link>https://cheong38.github.io/2021-02-11-market-leader-2/index/</link><guid isPermaLink="false">https://cheong38.github.io/2021-02-11-market-leader-2/index/</guid><pubDate>Thu, 11 Feb 2021 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;이 포스팅은 &lt;a href=&quot;/2021-01-31-market-leader/index/&quot;&gt;지난 포스팅&lt;/a&gt; 에 이은 2부이다.&lt;/p&gt;
+&lt;h1&gt;6장&lt;/h1&gt;
+&lt;p&gt;크게 성공한 제품들을 언뜻 보면 운에 크게 기인한 것으로 보인다. 적당한 시기, 적당한 곳에 제품이 등장했다는 것이다.&lt;/p&gt;
+&lt;p&gt;하지만 기업가와 경영자들은 극복하기 힘들어 보이는 장애물, 더딘 발전, 오랜 시간에도 불구하고 계속 노력하겠다는 의지가 있어야 한다.
+이 노력을 하기 위해서는 미래를 예견하는 비전이 있어야 한다. 이 부분이 중요하다고 생각한다. 아무런 비전 없이는 노력할 수 없다.
+또 반대로 노력만 한다고 성공하는 것이 아니다.&lt;/p&gt;
+&lt;p&gt;단순해 보이는 일회용 안전 면도기 역시 그 뒷면에는 혁신적인 기술을 도입하기 위한 엄청난 &lt;strong&gt;끈기&lt;/strong&gt;가 있었다.&lt;/p&gt;
+&lt;p&gt;질레트는 처음엔 그저 면도기와 면도날 두 부분으로 나누어져 평평하고 값싼 금속으로 만든 면도날이 무뎌지면 버려도 되는 면도기를 생각했다.
+그리고 이 정도의 디자인은 쉽게 만들 수 있을 거라 생각했다. 하지만 아무도 그의 이야기에 귀를 기울이는 사람은 없었다.
+그래서 그는 시제품을 만들기 위해 면도날 개발에 힘을 쏟았다.
+먼저 얇은 철판을 이용해서 면도날을 개발했는데, 얇은 철판은 너무 부서지기 쉽고, 약해서 날카롭게 날을 유지하지 못했다.
+전문가들을 찾아가면 한결같이 얇은 철판으로는 날카로운 날을 만들 수 없다고 했다.
+그렇게 질레트는 6년동안 면도날 개발에 매달렸다.
+그 다음으로 시도한 특허도 첫 번째 시도는 실패했고, 몇 달이나 걸려서 다시 특허를 신청해서야 특허를 얻을 수 있었다.
+이어서 그는 대량 생산을 할 수 있는 제조 시스템을 개발해야 했다.&lt;/p&gt;
+&lt;p&gt;이 책에서는 이 외에 P&amp;#x26;G, 소니 등의 사례를 들면서 자금력이 있는 기업이라 할 지라도 혁신적인 아이디어를 실행하는데는 오랜 시간과 끈기가 필요하다는 것을 역셜하고 있다.&lt;/p&gt;
+&lt;p&gt;나는 아이디어는 사업에 있어서 많이 쳐줘봐야 10% 정도를 차지한다고 생각한다.
+CEO 의 E 가 괜히 Execution 이 아니다.
+훌륭한 아이디어를 낼 수 있는 사람은 얼마 없지만, 어떤 아이디어든 그걸 실행할 수 있는 사람은 그것보다 훨씬 적을 것이다.
+아무리 간단한 아이디어라 할지라도 실제 실행은 그리 간단하지 않은 경우가 허다한 것 같다.&lt;/p&gt;
+&lt;p&gt;사람들은 크게 성공한 기업에 쉽게들 “행운”이 있었다라고 말한다. 실제로 사업판에는 운칠기삼이라는 말이 있기도하다.
+하지만 그 이면을 들여다보면, 아무도 비전을 믿어주지 않을때 꿋꿋이 밀고 나가며 뚝심있게 버티는 시기들이 있었다.
+이는 제록스, 마이크로소프트 등과 같은 기업도 예외는 아니다. 역시 기회는 준비된 사람들에게 주어지는 것이다.&lt;/p&gt;
+&lt;h1&gt;7장&lt;/h1&gt;
+&lt;p&gt;오늘날 기술은 끊임없이 변하고 있고, 소비자의 기호도 계속해서 바뀌고 있다. 때로는 기술 개발이 소비자의 기호를 바꾸기도 한다.
+지속적인 시장 지배력을 유지하려면 언제든지 자사의 제품, 태도, 마케팅을 바꿀 수 있는 의지가 있어야 한다.
+즉, 끊임없이 &lt;strong&gt;부단한 혁신&lt;/strong&gt;을 이루어내야 한다.&lt;/p&gt;
+&lt;p&gt;회사의 내부에는 부단한 혁신 추진을 방해하는 2가지 요소가 있다.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;자기 만족&lt;/li&gt;
+&lt;li&gt;기존 제품이 잠식당할지 모른다는 두려움&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;자기 만족으로 인해 침체된 기업의 예로 &lt;em&gt;질레트&lt;/em&gt;를 설명하였고,
+지속적인 혁신으로 경쟁자들을 견제하여 시장의 리더를 지킨 예로 &lt;em&gt;인텔&lt;/em&gt;을 소개하였다.&lt;/p&gt;
+&lt;p&gt;혁신을 주저한다면, 시장 지배력을 상실할 수 있다. 그리고 이러한 현상은 보통 순환적으로 나타난다.
+한 기업이 시장 지배력을 갖고 그 기업이 부단한 혁신에 실패하면서 다른 기업에게 시장 지배력을 양보하게 되고,
+그 다른 기업 역시 다른 같은 방식으로 시장 지배력을 또 다른 기업에게 넘겨준다는 것이다.&lt;/p&gt;
+&lt;p&gt;흥미로운 사실은 제품 부문 마다 위와 같은 &lt;strong&gt;제품의 순환 주기가 다르다&lt;/strong&gt;는 것이다.
+면도날의 경우, 그 기간은 10년이었고, 마이크로프로세서와 소프트웨어는 고작 몇 년에 불과했다고 한다.&lt;/p&gt;
+&lt;p&gt;질레트와 인텔, 마이크로소프트와 같은 시장에서 지배적인 위치에 있고 풍부한 재원을 가진 기업들조차 자기 만족에 빠질 여유가 없다.
+(행여, 일반 스타트업은 어떠하겠는가?)&lt;/p&gt;
+&lt;p&gt;또한, 비슷한 이유로 자사의 제품을 잠식할까봐 두려워하는 것 역시 잘못된 생각이다.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;기업이 스스로 자사의 제품을 잡아먹지 못하면, 다른 경쟁사가 그 제품을 잠식하게 될 것이다.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1&gt;8장&lt;/h1&gt;
+&lt;p&gt;앞장에서는 시장 지배력을 유지하기 위해서는 부단한 혁신이 필요하다고 하였다.
+이번 장에서는 부단한 혁신을 위한 &lt;strong&gt;조직을 만드는 방법&lt;/strong&gt;에 대해 소개한다.&lt;/p&gt;
+&lt;p&gt;이 책에서는 &lt;em&gt;관료주의&lt;/em&gt;가 혁신의 가장 큰 장애물이라고 한다. 관료주의를 없애고 &lt;em&gt;자율성&lt;/em&gt;을 확보해야 한다고 말한다.&lt;/p&gt;
+&lt;p&gt;그리고 또 다른 장애물은 &lt;em&gt;현재의 고객과 경쟁회사를 우선시&lt;/em&gt;하는 것이라 한다.
+당장 눈앞의 고객과 경쟁회사에 집중하다보면, 대량 소비시장을 희생해버릴 수도 있다.&lt;/p&gt;
+&lt;p&gt;또한 기업이 &lt;em&gt;인재보다 연구소를 더 중시&lt;/em&gt;하는 태도라고 말한다.
+회사가 혁신을 추구할때, 필요한 것이 참신한 인재이며, 이런 인재에게 자율적이고 협조적인 환경을 제공해야 하는데,
+연구소를 이를 저해한다고 한다.&lt;/p&gt;
+&lt;p&gt;내 생각에 여기서 또 하나 중요한 것은 &lt;strong&gt;인재&lt;/strong&gt;라는 단어인것 같다.
+아무 사람이나 데려다 놓고 자율성과 협조성 그리고 재정적 지원을 해준다고 회사에 혁신이 일어나지는 않을 것이다.
+창의적이고 참신한 문제 해결 능력을 지닌 사람에게 그러한 지원을 해줘야 할 것이다.
+경영자로서 이런 사람을 뽑는 것이 무엇보다 어렵고도 중요한 일이라 생각한다.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[AWS EC2 User Data 핸즈온]]></title><description><![CDATA[EC2 User Data EC2 User Data 스크립트를 이용해 인스턴스를 bootstrap 하는 것이 가능하다. bootstrap 이란 머신이 시작할 때의 시작 커맨드들을 의미한다. 이 스크립트는 인스턴스의 첫 시작 때 딱 한 번 실행된다. EC…]]></description><link>https://cheong38.github.io/2021-02-08-ec2-user-data/index/</link><guid isPermaLink="false">https://cheong38.github.io/2021-02-08-ec2-user-data/index/</guid><pubDate>Mon, 08 Feb 2021 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;EC2 User Data&lt;/h1&gt;
 &lt;p&gt;EC2 User Data 스크립트를 이용해 인스턴스를 &lt;strong&gt;bootstrap&lt;/strong&gt; 하는 것이 가능하다.&lt;/p&gt;
 &lt;p&gt;bootstrap 이란 머신이 시작할 때의 시작 커맨드들을 의미한다.&lt;/p&gt;
 &lt;p&gt;이 스크립트는 인스턴스의 첫 시작 때 &lt;strong&gt;딱 한 번&lt;/strong&gt; 실행된다.&lt;/p&gt;
@@ -15,7 +158,83 @@
 &lt;li&gt;nginx 를 설치&lt;/li&gt;
 &lt;li&gt;nginx 기본 페이지를 간단한 Hello World 페이지로 대체&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;---- 실제 AWS 콘솔에서의 실행화면 캡처해서 순차적으로 핸즈온 넣을 것&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Public IP vs Private IP]]></title><description><![CDATA[Public IP vs Private IP Public IP 인터넷 상에서 컴퓨터를 식별할 수 있는 주소로 사용 전체 인터넷 상에서 유일해야 함 (두 개 이상의 컴퓨터가 같은 IP…]]></description><link>https://cheong38.github.io/2021-02-06-public-private-ip/index/</link><guid isPermaLink="false">https://cheong38.github.io/2021-02-06-public-private-ip/index/</guid><pubDate>Sat, 06 Feb 2021 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;Public IP vs Private IP&lt;/h1&gt;
+&lt;p&gt;---- 실제 AWS 콘솔에서의 실행화면 캡처해서 순차적으로 핸즈온 넣을 것&lt;/p&gt;</content:encoded></item><item><title><![CDATA[쿠버네티스 (Kubernetes) 기본 개념]]></title><description><![CDATA[쿠버네티스 (Kubernetes) 이번 포스팅에서는 Node, Cluster, Master, Worker, Pod, ReplicaSet, Deployment, Namespace 와 같은 쿠버네티스의 기본 개념에 대해 다룬다. 노드 (Nodes…]]></description><link>https://cheong38.github.io/2021-02-08-kubenetes-basic/index/</link><guid isPermaLink="false">https://cheong38.github.io/2021-02-08-kubenetes-basic/index/</guid><pubDate>Mon, 08 Feb 2021 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;쿠버네티스 (Kubernetes)&lt;/h1&gt;
+&lt;p&gt;이번 포스팅에서는 Node, Cluster, Master, Worker, Pod, ReplicaSet, Deployment, Namespace 와 같은 쿠버네티스의 기본 개념에 대해 다룬다.&lt;/p&gt;
+&lt;h2&gt;노드 (Nodes)&lt;/h2&gt;
+&lt;p&gt;노드는 쿠버네티스에 의해 컨테이너가 실행되는 &lt;strong&gt;워커 머신&lt;/strong&gt;을 말한다.
+노드가 실패하면 노드 상에서 돌아가는 컨테이너 역시 정상적으로 실행될 수 없다.
+그렇기 때문에 하나 이상의 노드가 있어야 한다.&lt;/p&gt;
+&lt;h2&gt;클러스터 (Cluster)&lt;/h2&gt;
+&lt;p&gt;여러 개의 노드를 그룹 지은 것을 클러스터라고 한다.
+하나의 노드가 실패하더라도 다른 노드를 통해 어플리케이션은 정상 접근이 가능하도록 한다.
+또한 로드 밸런싱의 기능도 할 수 있다.&lt;/p&gt;
+&lt;h2&gt;마스터 (Master)&lt;/h2&gt;
+&lt;p&gt;그렇다면, &lt;strong&gt;클러스터의 관리&lt;/strong&gt;는 누가 해야 할까?
+이 책임을 맡은 것이 마스터이다.
+노드를 모니터하고 노드가 실패하면, 다른 노드로 워크로드를 옮기는 역할 등 클러스터 관리의 역할을 수행한다.&lt;/p&gt;
+&lt;p&gt;마스터는 쿠버네티스에서 마스터로 설정된 또 다른 노드이다.&lt;/p&gt;
+&lt;h2&gt;쿠버네티스 구성 요소&lt;/h2&gt;
+&lt;p&gt;쿠버네티스를 설치한다는 것은 다음과 같은 요소들을 구성한다는 것과 같다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;API Server&lt;/li&gt;
+&lt;li&gt;etcd&lt;/li&gt;
+&lt;li&gt;kubelet&lt;/li&gt;
+&lt;li&gt;Container Runtime&lt;/li&gt;
+&lt;li&gt;Controller&lt;/li&gt;
+&lt;li&gt;Scheduler&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;API Server&lt;/h3&gt;
+&lt;p&gt;API 서버는 쿠버네티스에 대한 프론트엔드로 동작한다. 사용자, 관리 기기, CLI 들은 모두 API 서버를 통해 쿠버네티스 클러스터와 상호작용한다.&lt;/p&gt;
+&lt;h3&gt;etcd&lt;/h3&gt;
+&lt;p&gt;key-value 쌍을 저장하는 분산된 신뢰도가 높은 저장소이다. 클러스터를 저장하기 위한 모든 데이터를 저장한다.&lt;/p&gt;
+&lt;h3&gt;kubelet&lt;/h3&gt;
+&lt;p&gt;각 노드들에 실행되는 에이전트이다. 이 에이전트는 컨테이너가 노드에 기대한대로 실행되는지를 확인한다.&lt;/p&gt;
+&lt;h3&gt;Container Runtime&lt;/h3&gt;
+&lt;p&gt;컨테이너를 실행하기 위한 기저에 있는 소프트웨어이다. 일반적으로 Docker 이나 다른 선택지들도 존재한다.&lt;/p&gt;
+&lt;h3&gt;Controller&lt;/h3&gt;
+&lt;p&gt;노드나 컨테이너가 다운되었을 때, 알리고 반응하는 역할을 한다. 이런 경우, 새 컨테이너를 띄울지 등을 결정한다.&lt;/p&gt;
+&lt;h3&gt;Scheduler&lt;/h3&gt;
+&lt;p&gt;스케줄러는 work 나 컨테이너를 여러 개의 노드들에 분배해주는 역할을 한다.&lt;/p&gt;
+&lt;h2&gt;Master vs Worker&lt;/h2&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 751px; &quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/dfe4e3933dc776dba92afd8bb99744ef/9ae5c/master_vs_worker.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 53.400000000000006%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAYAAAB/Ca1DAAAACXBIWXMAAAsSAAALEgHS3X78AAACkklEQVQoz22S30uTURjHd9OVWSRhBJVddyOuuqi0uumyqwj6B4IuIvIiKNEEy+zCkMC0UqdTluBKBQXB3z9edUtzzl9ravvxzk3n9J2mzk23fTq+bgXVgS/P877nOR+e7zmPJse4RM5nr6qbLX5ufPFxuVHmTrsPiHOwYvHDaF4OkWmQyTF6yE7UX29e5mqTRz1/vnIWjbIJ49MyQ2YbktD0/CqBDehc2CEYibEvWLvRuIqeXI1gkSMoYt/uUBiQrIxbHCwrsCH+PW53oikeDZLXt0LBwCrPen3k969QKCnkS2tEDkCCtB877HB8ZZcHXQGxp/Ck18+jDje5XV6eDq5TIAXJ1tvRmF1hhpwRWsxu2i3LSK49JMcujTObAhhTQdGE5WFfiCPvHRytcgq5OFYjk1rtJuWjkxTxnfp2Bk3D1BY66zblwz4qTH7qprapsfykbExhL9FZNBFHBDC91k1Gvcy5v5TR4CG9XNxh6/cQDRPr6Ew+qoY9GCwKxtkdKr4F2Yv+B6hLAPVuIVnVWZH/BvY5Ihgn/FT3zAnZaLGu07kYps668cdyAiiplp2HVnUeUg+imsukCOuq5bKxTYqlAC8HV4T8lIys89q0QZGIycdIjs2kf5c88QAlorawx0NRn5eifh/Pu2XemIPcMiygca3BV5uf7lE7ncNzWBeDyIE4HfYtwokOk0D7WpjBHyEki5Mekx1pUha5m27TPE5viIdtLjT3mv1c+uQmSzeLtn6Bi01eLhg83G4Tgx2P/2P5imGJu60BMkWttnaOLP082job2kY3Zyrn0OQ2K5z+YOf4iy7SSkc5VSfuRIxATrOX5EoCe5d2uKb3cv/LGimlZtJK+tUzJ171cVIw0t7Z+AVqqskX88grWwAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;Master vs Worker&quot;
+        title=&quot;Master vs Worker&quot;
+        src=&quot;/static/dfe4e3933dc776dba92afd8bb99744ef/9ae5c/master_vs_worker.png&quot;
+        srcset=&quot;/static/dfe4e3933dc776dba92afd8bb99744ef/0eb09/master_vs_worker.png 500w,
+/static/dfe4e3933dc776dba92afd8bb99744ef/9ae5c/master_vs_worker.png 751w&quot;
+        sizes=&quot;(max-width: 751px) 100vw, 751px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Matser 에는 API Server, etcd, controller, scheduler 가 위치하게 되고,
+Node 에는 kubelet 과 container runtime 이 위치한다.&lt;/p&gt;
+&lt;p&gt;kubelet 과 API Server 는 서로 상호작용하면서 health 체크를 하고, 마스터로부터 요청을 수행한다.&lt;/p&gt;
+&lt;h2&gt;kubectl&lt;/h2&gt;
+&lt;p&gt;kubelctl 혹은 kube control 이라 부르는 커맨드라인 유틸리티이다.&lt;/p&gt;
+&lt;p&gt;kubectl 은 클러스터에 어플리케이션을 배포하거나 클러스터나 노드 정보를 가져오고 관리하는 등 클러스터 관련한 작업들을 수행하기 위해 사용한다.&lt;/p&gt;
+&lt;h3&gt;예시&lt;/h3&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ kubectl cluster-info&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;위의 명령어는 클러스터의 정보를 보여준다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ kubectl get nodes&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;위의 명령어는 클러스터의 노드를 모두 리스트업 해준다.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Public IP vs Private IP]]></title><description><![CDATA[Public IP vs Private IP Public IP 인터넷 상에서 컴퓨터를 식별할 수 있는 주소로 사용 전체 인터넷 상에서 유일해야 함 (두 개 이상의 컴퓨터가 같은 IP…]]></description><link>https://cheong38.github.io/2021-02-06-public-private-ip/index/</link><guid isPermaLink="false">https://cheong38.github.io/2021-02-06-public-private-ip/index/</guid><pubDate>Sat, 06 Feb 2021 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;Public IP vs Private IP&lt;/h1&gt;
 &lt;h2&gt;Public IP&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;인터넷 상에서 컴퓨터를 식별할 수 있는 주소로 사용&lt;/li&gt;
@@ -446,29 +665,7 @@ subnet mask 는 IP 주소 내에 얼마나 많은 비트가 변할 수 있는지
 &lt;ul&gt;
 &lt;li&gt;Public IP 구역&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Private IP 구역을 제외한 모든 구역이 Public IP 구역이다.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[마켓 리더의 조건 (시장의 지배자가 되고 그것을 존속하려면 무엇이 필요한가?) 2/2]]></title><description><![CDATA[이 포스팅은 지난 포스팅 에 이은 2부이다.…]]></description><link>https://cheong38.github.io/2021-02-01-market-leader-2/index/</link><guid isPermaLink="false">https://cheong38.github.io/2021-02-01-market-leader-2/index/</guid><pubDate>Mon, 01 Feb 2021 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;이 포스팅은 &lt;a href=&quot;/2021-01-31-market-leader/index/&quot;&gt;지난 포스팅&lt;/a&gt; 에 이은 2부이다.&lt;/p&gt;
-&lt;h1&gt;6장&lt;/h1&gt;
-&lt;p&gt;크게 성공한 제품들을 언뜻 보면 운에 크게 기인한 것으로 보인다. 적당한 시기, 적당한 곳에 제품이 등장했다는 것이다.&lt;/p&gt;
-&lt;p&gt;하지만 기업가와 경영자들은 극복하기 힘들어 보이는 장애물, 더딘 발전, 오랜 시간에도 불구하고 계속 노력하겠다는 의지가 있어야 한다.
-이 노력을 하기 위해서는 미래를 예견하는 비전이 있어야 한다. 이 부분이 중요하다고 생각한다. 아무런 비전 없이는 노력할 수 없다.
-또 반대로 노력만 한다고 성공하는 것이 아니다.&lt;/p&gt;
-&lt;p&gt;단순해 보이는 일회용 안전 면도기 역시 그 뒷면에는 혁신적인 기술을 도입하기 위한 엄청난 끈기가 있었다.&lt;/p&gt;
-&lt;p&gt;질레트는 처음엔 그저 면도기와 면도날 두 부분으로 나누어져 평평하고 값싼 금속으로 만든 면도날이 무뎌지면 버려도 되는 면도기를 생각했다.
-그리고 이 정도의 디자인은 쉽게 만들 수 있을 거라 생각했다. 하지만 아무도 그의 이야기에 귀를 기울이는 사람은 없었다.
-그래서 그는 시제품을 만들기 위해 면도날 개발에 힘을 쏟았다.
-먼저 얇은 철판을 이용해서 면도날을 개발했는데, 얇은 철판은 너무 부서지기 쉽고, 약해서 날카롭게 날을 유지하지 못했다.
-전문가들을 찾아가면 한결같이 얇은 철판으로는 날카로운 날을 만들 수 없다고 했다.
-그렇게 질레트는 6년동안 면도날 개발에 매달렸다.
-그 다음으로 시도한 특허도 첫 번째 시도는 실패했고, 몇 달이나 걸려서 다시 특허를 신청해서야 특허를 얻을 수 있었다.
-이어서 그는 대량 생산을 할 수 있는 제조 시스템을 개발해야 했다.&lt;/p&gt;
-&lt;p&gt;이 책에서는 이 외에 P&amp;#x26;G, 소니 등의 사례를 들면서 자금력이 있는 기업이라 할 지라도 혁신적인 아이디어를 실행하는데는 오랜 시간과 끈기가 필요하다는 것을 역셜하고 있다.&lt;/p&gt;
-&lt;p&gt;나는 아이디어는 사업에 있어서 많이 쳐줘봐야 10% 정도를 차지한다고 생각한다.
-CEO 의 E 가 괜히 Execution 이 아니다.
-훌륭한 아이디어를 낼 수 있는 사람은 얼마 없지만, 어떤 아이디어든 그걸 실행할 수 있는 사람은 그것보다 훨씬 적을 것이다.
-아무리 간단한 아이디어라 할지라도 실제 실행은 그리 간단하지 않은 경우가 허다한 것 같다.&lt;/p&gt;
-&lt;p&gt;사람들은 크게 성공한 기업에 쉽게들 “행운”이 있었다라고 말한다. 실제로 사업판에는 운칠기삼이라는 말이 있기도하다.
-하지만 그 이면을 들여다보면, 아무도 비전을 믿어주지 않을때 꿋꿋이 밀고 나가며 뚝심있게 버티는 시기들이 있었다.
-이는 제록스, 마이크로소프트 등과 같은 기업도 예외는 아니다. 역시 기회는 준비된 사람들에게 주어지는 것이다.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[마켓 리더의 조건 (시장의 지배자가 되고 그것을 존속하려면 무엇이 필요한가?) 1/2]]></title><description><![CDATA[개요 한 달 쯤 전 지인에게 추천 받아  이라는 책을 읽어보게 되었다. 이 책은 높은 시장 점유율을 갖는 (일반적으로 1위) 업체들은 어떤 특징을 가지고 있는지를 10년이 넘는 기간 동안 분석하여 그에 대한 결과를 서술하고 있다. 1장…]]></description><link>https://cheong38.github.io/2021-01-31-market-leader/index/</link><guid isPermaLink="false">https://cheong38.github.io/2021-01-31-market-leader/index/</guid><pubDate>Sun, 31 Jan 2021 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;개요&lt;/h1&gt;
+&lt;p&gt;Private IP 구역을 제외한 모든 구역이 Public IP 구역이다.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[마켓 리더의 조건 (시장의 지배자가 되고 그것을 존속하려면 무엇이 필요한가?) 1/2]]></title><description><![CDATA[개요 한 달 쯤 전 지인에게 추천 받아  이라는 책을 읽어보게 되었다. 이 책은 높은 시장 점유율을 갖는 (일반적으로 1위) 업체들은 어떤 특징을 가지고 있는지를 10년이 넘는 기간 동안 분석하여 그에 대한 결과를 서술하고 있다. 1장…]]></description><link>https://cheong38.github.io/2021-01-31-market-leader/index/</link><guid isPermaLink="false">https://cheong38.github.io/2021-01-31-market-leader/index/</guid><pubDate>Sun, 31 Jan 2021 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;개요&lt;/h1&gt;
 &lt;p&gt;한 달 쯤 전 지인에게 추천 받아 &lt;code class=&quot;language-text&quot;&gt;마켓 리더의 조건&lt;/code&gt; 이라는 책을 읽어보게 되었다.&lt;/p&gt;
 &lt;p&gt;이 책은 높은 시장 점유율을 갖는 (일반적으로 1위) 업체들은 어떤 특징을 가지고 있는지를 10년이 넘는 기간 동안 분석하여 그에 대한 결과를 서술하고 있다.&lt;/p&gt;
 &lt;h1&gt;1장&lt;/h1&gt;
